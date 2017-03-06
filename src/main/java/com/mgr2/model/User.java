@@ -46,6 +46,29 @@ public class User {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "user_training", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "training_id"))
+	private Set<Training> trainings;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "user_task", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
+	private Set<Task> tasks;
+
+	
+	public Set<Training> getTrainings() {
+		return trainings;
+	}
+
+	public void setTrainings(Set<Training> trainings) {
+		this.trainings = trainings;
+	}
+
+	public Set<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
+	}
 
 	public int getId() {
 		return id;
