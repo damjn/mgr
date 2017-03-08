@@ -1,5 +1,7 @@
 package com.mgr2.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 
 @Entity
 @Table(name = "training")
@@ -22,7 +25,7 @@ public class Training {
 	@JoinColumn(name="owner_id")
 	private User user;
 	
-	@Column(name="name")
+	@Column(name="name", unique=true)
 	private String name;
 	
 	@Column(name="description")
@@ -30,6 +33,29 @@ public class Training {
 	
 	@Column(name="path")
 	private String path;
+	
+	@Digits(integer=5, fraction=2)
+	@Column(name = "price")
+	private BigDecimal price;
+	
+	@Column(name = "accepted")
+	private int accepted;
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public int getAccepted() {
+		return accepted;
+	}
+
+	public void setAccepted(int accepted) {
+		this.accepted = accepted;
+	}
 
 	public int getId() {
 		return id;
