@@ -25,20 +25,25 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public void store(MultipartFile file, String trainingName) {
+	public String store(MultipartFile file, String trainingName) {
+		Path filePath;
 		try {
 			if (file.isEmpty()) {
 				throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
 			}
-			Path newPath = Paths.get(rootLocation.toString(), trainingName);
+			//Path newPath = Paths.get(rootLocation.toString(), trainingName);
+			Path newPath = rootLocation.resolve(trainingName);
 			System.out.println("Nowa ścieżka " + newPath);
 			if (!Files.exists(newPath)) {
 				Files.createDirectory(newPath);
 			}
-			Files.copy(file.getInputStream(), newPath.resolve(file.getOriginalFilename()));
+			filePath = newPath.resolve(file.getOriginalFilename());
+			Files.copy(file.getInputStream(), filePath);
+			System.out.println("Cala ścieżka " + filePath);
 		} catch (IOException e) {
 			throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
 		}
+		return filePath.toString();
 	}
 
 	@Override
@@ -52,7 +57,7 @@ public class FileSystemStorageService implements StorageService {
 
 	}
 
-	@Override
+	@Override // chyba bezuzyteczny
 	public Path load(String filename) {
 		return rootLocation.resolve(filename);
 	}

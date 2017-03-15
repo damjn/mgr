@@ -1,6 +1,7 @@
 package com.mgr2.model;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 
@@ -31,9 +33,9 @@ public class Training {
 	@Column(name="description")
 	private String descritpion;
 	
-	@Column(name="path")
-	private String path;
-	
+	@OneToMany(mappedBy="training")
+	private Set<Content> content;
+
 	@Digits(integer=5, fraction=2)
 	@Column(name = "price")
 	private BigDecimal price;
@@ -41,6 +43,14 @@ public class Training {
 	@Column(name = "accepted")
 	private int accepted;
 
+	public Set<Content> getContent() {
+		return content;
+	}
+	
+	public void setContent(Set<Content> content) {
+		this.content = content;
+	}
+	
 	public BigDecimal getPrice() {
 		return price;
 	}
@@ -88,15 +98,5 @@ public class Training {
 	public void setDescritpion(String descritpion) {
 		this.descritpion = descritpion;
 	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
-	
-	
 	
 }

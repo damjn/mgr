@@ -10,7 +10,7 @@ public interface StorageService {
 
     void init();
 
-    void store(MultipartFile file, String trainingName);
+    String store(MultipartFile file, String trainingName);
 
     Stream<Path> loadAll();
 

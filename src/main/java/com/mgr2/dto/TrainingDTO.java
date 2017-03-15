@@ -1,10 +1,9 @@
 package com.mgr2.dto;
 
-import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.web.multipart.MultipartFile;
 
 public class TrainingDTO {
 
@@ -13,15 +12,8 @@ public class TrainingDTO {
 	private String name;
 	@NotEmpty(message = "*Please provide course description")
 	private String description;
-	private MultipartFile file;
+	private ArrayList<ContentDTO> contentList;
 	private BigDecimal price;
-	
-	public BigDecimal getPrice() {
-		return price;
-	}
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
 	public int getOwner_id() {
 		return owner_id;
 	}
@@ -40,11 +32,19 @@ public class TrainingDTO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public MultipartFile getFile() {
-		return file;
+	public ArrayList<ContentDTO> getContentList() {
+		if(contentList == null){
+			contentList = new ArrayList<ContentDTO>();
+		}
+		return contentList;
 	}
-	public void setFile(MultipartFile file) {
-		this.file = file;
+	public void setContentList(ArrayList<ContentDTO> contentList) {
+		this.contentList = contentList;
 	}
-	
+	public BigDecimal getPrice() {
+		return price;
+	}
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
 }
