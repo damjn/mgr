@@ -11,8 +11,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,11 +39,11 @@ public class AddCourseController {
 
 	@Autowired
 	private TrainingService trainingService;
-	
+
 	@Autowired
 	private ContentService contentService;
 
-	@RequestMapping(value = "/add_course", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/add_course", method = RequestMethod.GET)
 	public ModelAndView registration() {
 		ModelAndView modelAndView = new ModelAndView();
 		TrainingDTO trainingDTO = new TrainingDTO();
@@ -54,9 +56,9 @@ public class AddCourseController {
 		modelAndView.addObject("trainingDTO", trainingDTO);
 		modelAndView.setViewName("add_course");
 		return modelAndView;
-	}
+	}*/
 
-	@RequestMapping(value = "/add_course", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/add_course", method = RequestMethod.POST)
 	public ModelAndView createNewUser(@Valid TrainingDTO trainingDTO, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
 		System.out.println("else");
@@ -74,9 +76,9 @@ public class AddCourseController {
 			ArrayList<ContentDTO> conDTOList = new ArrayList<>();
 			HashSet<Content> conSet = new HashSet<>();
 			conDTOList = trainingDTO.getContentList();
-			for(ContentDTO contentDTO : conDTOList){
+			for (ContentDTO contentDTO : conDTOList) {
 				System.out.println("XDD");
-				if(contentDTO.getDescription()==null || contentDTO.getDescription().isEmpty()){
+				if (contentDTO.getDescription() == null || contentDTO.getDescription().isEmpty()) {
 					System.out.println("jak gowno");
 					break; // slabe to jest jak gowno
 				}
@@ -84,13 +86,14 @@ public class AddCourseController {
 				Content content = new Content();
 				content.setDescription(contentDTO.getDescription());
 				content.setOrder(contentDTO.getOrderNR());
-				//String path = storageService.load(contentDTO.getFile().getOriginalFilename()).toString();
+				// String path =
+				// storageService.load(contentDTO.getFile().getOriginalFilename()).toString();
 				content.setPath(path);
 				contentService.saveContent(content);
 				conSet.add(content);
 			}
 			Training training = new Training();
-			training.setDescritpion(trainingDTO.getDescription());
+			training.setDescription(trainingDTO.getDescription());
 			training.setName(trainingDTO.getName());
 			training.setUser(user);
 			training.setPrice(trainingDTO.getPrice());
@@ -98,9 +101,22 @@ public class AddCourseController {
 			trainingService.saveTraining(training);
 			modelAndView.addObject("trainingDTO", new TrainingDTO());
 			modelAndView.addObject("successMessage", "Training has been added successfully");
-			modelAndView.setViewName("add_course"); //jakis inny view trzeba ustawiac chyba
+			modelAndView.setViewName("add_course"); // jakis inny view trzeba
+													// ustawiac chyba
 		}
 		return modelAndView;
+	}*/
+
+	@RequestMapping(value = "/add_course2", method = RequestMethod.GET)
+	public ModelAndView create_course() {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("add_course2");
+		return model;
 	}
+	
+	@RequestMapping(value = "/addCourse2",method = RequestMethod.POST)
+    public @ResponseBody String addCourse (@RequestBody Training training){
+       return trainingService.saveTraining(training);
+    }
 
 }

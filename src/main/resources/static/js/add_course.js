@@ -23,7 +23,7 @@ $(document).ready(function() {
 		alert( "Index: " + $( "li" ).index( listItem ) );
 	});
 	
-	$( "#1-content" ).on( "click", function( event, ui ) {
+	$( "#1-content" ).on( "dragstop", function( event, ui ) {
 		alert("draglo sie");
 	} );
 });

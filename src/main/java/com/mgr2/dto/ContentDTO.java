@@ -3,21 +3,36 @@ package com.mgr2.dto;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ContentDTO {
-	private int orderNR;
-	private MultipartFile file;
+	
+	private int id;
+	private String path;
+	private int order_nr;
+	private int training_id;
 	private String description;
 	
-	public int getOrderNR() {
-		return orderNR;
+	public int getId() {
+		return id;
 	}
-	public void setOrderNR(int orderNR) {
-		this.orderNR = orderNR;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public MultipartFile getFile() {
-		return file;
+	public String getPath() {
+		return path;
 	}
-	public void setFile(MultipartFile file) {
-		this.file = file;
+	public void setPath(String path) {
+		this.path = path;
+	}
+	public int getOrder_nr() {
+		return order_nr;
+	}
+	public void setOrder_nr(int order_nr) {
+		this.order_nr = order_nr;
+	}
+	public int getTraining_id() {
+		return training_id;
+	}
+	public void setTraining_id(int training_id) {
+		this.training_id = training_id;
 	}
 	public String getDescription() {
 		return description;

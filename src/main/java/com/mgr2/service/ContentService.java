@@ -1,7 +1,7 @@
 package com.mgr2.service;
 
-import com.mgr2.model.Content;
+import com.mgr2.dto.ContentDTO;
 
 public interface ContentService {
-	public void saveContent(Content content);
+	public String saveContent(ContentDTO content);
 }

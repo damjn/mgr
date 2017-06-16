@@ -1,5 +1,6 @@
 package com.mgr2.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -16,7 +17,8 @@ import javax.validation.constraints.Digits;
 
 @Entity
 @Table(name = "training")
-public class Training {
+public class Training implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,7 +33,7 @@ public class Training {
 	private String name;
 	
 	@Column(name="description")
-	private String descritpion;
+	private String description;
 	
 	@OneToMany(mappedBy="training")
 	private Set<Content> content;
@@ -91,12 +93,13 @@ public class Training {
 		this.name = name;
 	}
 
-	public String getDescritpion() {
-		return descritpion;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescritpion(String descritpion) {
-		this.descritpion = descritpion;
+	public void setDescription(String description) {
+		this.description = description;
 	}
+
 	
 }

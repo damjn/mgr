@@ -3,6 +3,7 @@ package com.mgr2.storage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +27,7 @@ public class FileSystemStorageService implements StorageService {
 
 	@Override
 	public String store(MultipartFile file, String trainingName) {
+		init();
 		Path filePath;
 		try {
 			if (file.isEmpty()) {
@@ -76,6 +78,24 @@ public class FileSystemStorageService implements StorageService {
 		} catch (MalformedURLException e) {
 			throw new StorageFileNotFoundException("Could not read file: " + filename, e);
 		}
+	}
+	
+	@Override
+	public MultipartFile loadAsMultipartFile (Path path){
+		
+		String name = path.getFileName().toString();
+		System.out.println("Whole path: " + path.toString() + "filename: " + name);
+		String originalFileName = name;
+		String contentType = "text/plain";
+		byte[] content = null;
+		try {
+		    content = Files.readAllBytes(path);
+		} catch (final IOException e) {
+			throw new StorageFileNotFoundException("Could not read file: " + name);
+		}
+		MultipartFile result = new MockMultipartFile(name,
+		                     originalFileName, contentType, content);
+		return result;
 	}
 
 	@Override

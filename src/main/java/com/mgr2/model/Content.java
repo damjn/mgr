@@ -1,5 +1,7 @@
 package com.mgr2.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "content")
-public class Content {
+public class Content implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,12 +50,16 @@ public class Content {
 		this.path = path;
 	}
 
-	public int getOrder() {
+	public int getOrder_nr() {
 		return order_nr;
 	}
 
-	public void setOrder(int order) {
-		this.order_nr = order;
+	public void setOrder_nr(int order_nr) {
+		this.order_nr = order_nr;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public Training getTraining() {

@@ -2,23 +2,32 @@ package com.mgr2.dto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import com.mgr2.model.Content;
+
 
 public class TrainingDTO {
 
-	private int owner_id;
-	@NotEmpty(message = "*Please provide course name")
+	private int id;
+	private UserDTO userDTO;
 	private String name;
-	@NotEmpty(message = "*Please provide course description")
 	private String description;
-	private ArrayList<ContentDTO> contentList;
+	private Set<ContentDTO> contentList;
 	private BigDecimal price;
-	public int getOwner_id() {
-		return owner_id;
+	
+	public int getId() {
+		return id;
 	}
-	public void setOwner_id(int owner_id) {
-		this.owner_id = owner_id;
+	public void setId(int id) {
+		this.id = id;
+	}
+	public UserDTO getUserDTO() {
+		return userDTO;
+	}
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
 	}
 	public String getName() {
 		return name;
@@ -32,14 +41,14 @@ public class TrainingDTO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public ArrayList<ContentDTO> getContentList() {
+	public Set<ContentDTO> getContentList() {
 		if(contentList == null){
-			contentList = new ArrayList<ContentDTO>();
+			contentList = new HashSet<ContentDTO>();
 		}
 		return contentList;
 	}
-	public void setContentList(ArrayList<ContentDTO> contentList) {
-		this.contentList = contentList;
+	public void setContentList(Set<ContentDTO> set) {
+		this.contentList = set;
 	}
 	public BigDecimal getPrice() {
 		return price;
