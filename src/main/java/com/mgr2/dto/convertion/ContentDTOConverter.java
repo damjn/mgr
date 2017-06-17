@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,7 +39,7 @@ public class ContentDTOConverter {
 	
 	public Content convertDTOtoModel(ContentDTO cDTO){
 		Content c = new Content();
-		c.setId(cDTO.getId()); // to chyba trzeba wywalic
+		c.setId(cDTO.getId()); 
 		//String path = cDTO.getFile().getOriginalFilename();
 		//System.out.println("sciezynka: " + path);
 		System.out.println("id kursu: " + cDTO.getTraining_id() + " desc " + cDTO.getDescription() + " order nr: " + cDTO.getOrder_nr());
@@ -49,12 +50,19 @@ public class ContentDTOConverter {
 		return c;
 	}
 
-	public List<ContentDTO> convertListOfModelsToDTO(List<Content> cList){
+	public List<ContentDTO> convertListOfModelsToDTOList(List<Content> cList){
 		List<ContentDTO> cDTOlist = new ArrayList<>();
 		for(Content c : cList){
 			cDTOlist.add(covertModelToDTO(c));
 		}
 		return cDTOlist;
-		
+	}
+	
+	public List<ContentDTO> convertSetOfModelsToDTOList(Set<Content> cList){
+		List<ContentDTO> cDTOlist = new ArrayList<>();
+		for(Content c : cList){
+			cDTOlist.add(covertModelToDTO(c));
+		}
+		return cDTOlist;
 	}
 }

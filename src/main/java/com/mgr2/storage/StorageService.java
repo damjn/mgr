@@ -21,5 +21,7 @@ public interface StorageService {
     MultipartFile loadAsMultipartFile (Path path);
 
     void deleteAll();
+    
+    void delete(String path);
 
 }

@@ -10,7 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
@@ -26,14 +28,14 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public String store(MultipartFile file, String trainingName) {
+	public String store(MultipartFile file, String trainingName) { // dodac jakies zabezpieczenie przed dodaniem tego samego pliku?
 		init();
 		Path filePath;
 		try {
 			if (file.isEmpty()) {
 				throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
 			}
-			//Path newPath = Paths.get(rootLocation.toString(), trainingName);
+			// Path newPath = Paths.get(rootLocation.toString(), trainingName);
 			Path newPath = rootLocation.resolve(trainingName);
 			System.out.println("Nowa ścieżka " + newPath);
 			if (!Files.exists(newPath)) {
@@ -79,22 +81,22 @@ public class FileSystemStorageService implements StorageService {
 			throw new StorageFileNotFoundException("Could not read file: " + filename, e);
 		}
 	}
-	
+
 	@Override
-	public MultipartFile loadAsMultipartFile (Path path){
-		
+	public MultipartFile loadAsMultipartFile(Path path) { // chyba nie przydatne
+															// anymore
+
 		String name = path.getFileName().toString();
 		System.out.println("Whole path: " + path.toString() + "filename: " + name);
 		String originalFileName = name;
 		String contentType = "text/plain";
 		byte[] content = null;
 		try {
-		    content = Files.readAllBytes(path);
+			content = Files.readAllBytes(path);
 		} catch (final IOException e) {
 			throw new StorageFileNotFoundException("Could not read file: " + name);
 		}
-		MultipartFile result = new MockMultipartFile(name,
-		                     originalFileName, contentType, content);
+		MultipartFile result = new MockMultipartFile(name, originalFileName, contentType, content);
 		return result;
 	}
 
@@ -112,5 +114,20 @@ public class FileSystemStorageService implements StorageService {
 		} catch (IOException e) {
 			throw new StorageException("Could not initialize storage", e);
 		}
+	}
+
+	@Override
+	public void delete(String path) {
+		try {
+			Files.delete(Paths.get(path));
+		} catch (NoSuchFileException x) {
+			System.err.format("%s: no such" + " file or directory%n", path);
+		} catch (DirectoryNotEmptyException x) {
+			System.err.format("%s not empty%n", path);
+		} catch (IOException x) {
+			// File permission problems are caught here.
+			System.err.println(x);
+		}
+
 	}
 }

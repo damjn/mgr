@@ -27,10 +27,13 @@ public class TrainingController {
 	@Autowired
 	TrainingRepository trainingRepository;
 	
+	@Autowired
+	TrainingDTOConverter trainingDTOConverter;
+	
 	@RequestMapping(value = "/courses",method = RequestMethod.GET)
     public @ResponseBody
     List<TrainingDTO> getAllCourses(){
-        return TrainingDTOConverter.convertListOfModelsToDTOList(trainingRepository.findAll());
+        return trainingDTOConverter.convertListOfModelsToDTOList(trainingRepository.findAll());
     }
 	
 	@RequestMapping(value = "/t_courses",method = RequestMethod.GET)

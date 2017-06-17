@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,42 +19,46 @@ import javax.validation.constraints.Digits;
 
 @Entity
 @Table(name = "training")
-public class Training implements Serializable{
+public class Training implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="training_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "training_id")
 	private int id;
-	
+
 	@ManyToOne
-	@JoinColumn(name="owner_id")
+	@JoinColumn(name = "owner_id")
 	private User user;
-	
-	@Column(name="name", unique=true)
+
+	@Column(name = "name", unique = true)
 	private String name;
-	
-	@Column(name="description")
+
+	@Column(name = "description")
 	private String description;
-	
-	@OneToMany(mappedBy="training")
+
+	@OneToMany(mappedBy = "training")
 	private Set<Content> content;
 
-	@Digits(integer=5, fraction=2)
+	@Digits(integer = 5, fraction = 2)
 	@Column(name = "price")
 	private BigDecimal price;
-	
+
 	@Column(name = "accepted")
 	private int accepted;
+	
+	@Column(name = "category")
+	@Enumerated(EnumType.STRING)
+	private Category category;
 
 	public Set<Content> getContent() {
 		return content;
 	}
-	
+
 	public void setContent(Set<Content> content) {
 		this.content = content;
 	}
-	
+
 	public BigDecimal getPrice() {
 		return price;
 	}
@@ -101,5 +107,12 @@ public class Training implements Serializable{
 		this.description = description;
 	}
 
-	
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 }

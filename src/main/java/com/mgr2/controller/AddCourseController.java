@@ -28,6 +28,8 @@ import com.mgr2.service.TrainingService;
 import com.mgr2.service.UserService;
 import com.mgr2.storage.StorageService;
 
+
+//DO WYJEBANIA
 @Controller
 public class AddCourseController {
 

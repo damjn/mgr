@@ -3,12 +3,15 @@ package com.mgr2.dto.convertion;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.mgr2.dto.UserDTO;
 import com.mgr2.model.User;
 
+@Service("userDTOConverter")
 public class UserDTOConverter {
 	
-	public static UserDTO convertModelToDTO(User user){
+	public UserDTO convertModelToDTO(User user){
 		UserDTO uDTO = new UserDTO();
 		uDTO.setId(user.getId());
 		uDTO.setEmail(user.getEmail());
@@ -19,7 +22,7 @@ public class UserDTOConverter {
 		return uDTO;
 	}
 	
-	public static User convertDTOtoModel(UserDTO uDTO){
+	public User convertDTOtoModel(UserDTO uDTO){
 		User user = new User();
 		user.setId(uDTO.getId());
 		user.setEmail(uDTO.getEmail());
@@ -30,13 +33,12 @@ public class UserDTOConverter {
 		return user;
 	}
 	
-	public static List<UserDTO> convertSetOfModelsToDTO(List<User> users){
+	public List<UserDTO> convertSetOfModelsToDTO(List<User> users){
 		List<UserDTO> uDTO = new ArrayList<>();
 		for(User u : users){
 			uDTO.add(convertModelToDTO(u));
 		}
 		return uDTO;
-		
 	}
 
 }

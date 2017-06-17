@@ -1,36 +1,57 @@
 package com.mgr2.dto.convertion;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.mgr2.dto.TrainingDTO;
 import com.mgr2.model.Training;
 
+@Service("trainingDTOConverter")
 public class TrainingDTOConverter {
 	
-	public static TrainingDTO convertModelToDTO(Training training){
+	@Autowired
+	UserDTOConverter userDTOConverter;
+	
+	@Autowired
+	ContentDTOConverter contentDTOConverter;
+	
+	public TrainingDTO convertModelToDTO(Training training){
 		TrainingDTO tDTO = new TrainingDTO();
 		tDTO.setId(training.getId());
-		tDTO.setUserDTO(UserDTOConverter.convertModelToDTO(training.getUser()));
+		tDTO.setUserDTO(userDTOConverter.convertModelToDTO(training.getUser()));
 		tDTO.setName(training.getName());
 		tDTO.setDescription(training.getDescription());
+		tDTO.setContentList(contentDTOConverter.convertSetOfModelsToDTOList(training.getContent()));
 		tDTO.setPrice(training.getPrice());
 		return tDTO;
 	}
 	
-	public static Training convertDTOtoModel(TrainingDTO tDTO){
+	public Training convertDTOtoModel(TrainingDTO tDTO){
 		Training t = new Training();
 		t.setId(tDTO.getId());
-		t.setUser(UserDTOConverter.convertDTOtoModel(tDTO.getUserDTO()));
+		t.setUser(userDTOConverter.convertDTOtoModel(tDTO.getUserDTO()));
 		t.setName(tDTO.getName());
 		t.setDescription(tDTO.getDescription());
+		// t.setContent(); chyba nie potrzebne
 		t.setPrice(tDTO.getPrice());
 		return t;
 	}
 	
-	public static List<TrainingDTO> convertListOfModelsToDTOList(List<Training> trainings) {
+	public List<TrainingDTO> convertListOfModelsToDTOList(List<Training> trainings) {
+        List<TrainingDTO> tDTO = new ArrayList<>();
+        for (Training t : trainings) {
+            tDTO.add(convertModelToDTO(t));
+        }
+        return tDTO;
+    }
+	
+	public List<TrainingDTO> convertSetOfModelsToDTOList(Set<Training> trainings) {
         List<TrainingDTO> tDTO = new ArrayList<>();
         for (Training t : trainings) {
             tDTO.add(convertModelToDTO(t));

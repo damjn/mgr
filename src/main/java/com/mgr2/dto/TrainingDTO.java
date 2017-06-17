@@ -3,8 +3,10 @@ package com.mgr2.dto;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import com.mgr2.model.Category;
 import com.mgr2.model.Content;
 
 
@@ -14,8 +16,10 @@ public class TrainingDTO {
 	private UserDTO userDTO;
 	private String name;
 	private String description;
-	private Set<ContentDTO> contentList;
+	private List<ContentDTO> contentList;
 	private BigDecimal price;
+	// private int accepted; // dodac lub nie
+	private Category category;
 	
 	public int getId() {
 		return id;
@@ -41,13 +45,13 @@ public class TrainingDTO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Set<ContentDTO> getContentList() {
+	public List<ContentDTO> getContentList() {
 		if(contentList == null){
-			contentList = new HashSet<ContentDTO>();
+			contentList = new ArrayList<ContentDTO>();
 		}
 		return contentList;
 	}
-	public void setContentList(Set<ContentDTO> set) {
+	public void setContentList(List<ContentDTO> set) {
 		this.contentList = set;
 	}
 	public BigDecimal getPrice() {
@@ -56,4 +60,11 @@ public class TrainingDTO {
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
 }

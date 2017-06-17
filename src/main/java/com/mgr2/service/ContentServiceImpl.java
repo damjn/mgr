@@ -37,5 +37,17 @@ public class ContentServiceImpl implements ContentService {
 		}
 	}
 
+	@Override
+	public String deleteContent(int contentId) {
+		try {
+			String path = contentRepository.findOne(contentId).getPath();
+			storageService.delete(path);
+			contentRepository.delete(contentId);
+			return "CONTENT_DELETED";
+		} catch (PersistentObjectException e) {
+			return "ERROR_WHILE_CONTENT_DELETING";
+		}
+	}
+
 	// customerDao.add(CustomerVoConvertion.convertVoToEntity(cVo));
 }

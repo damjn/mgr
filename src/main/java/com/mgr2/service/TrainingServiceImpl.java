@@ -24,6 +24,9 @@ public class TrainingServiceImpl implements TrainingService {
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	TrainingDTOConverter trainingDTOConverter;
+	
 	@Override
 	public String saveTraining(Training training) { // pozmieniac na DTO
 		training.setAccepted(1);
@@ -53,12 +56,12 @@ public class TrainingServiceImpl implements TrainingService {
 	    String name = auth.getName(); //get logged in username
 	    User user = userRepository.findByEmail(name);
 	    List<Training> trainerCourses = trainingRepository.findByUserId(user.getId());
-		return TrainingDTOConverter.convertListOfModelsToDTOList(trainerCourses);
+		return trainingDTOConverter.convertListOfModelsToDTOList(trainerCourses);
 	}
 
 	@Override
 	public TrainingDTO findById(int id) {
-		return TrainingDTOConverter.convertModelToDTO(trainingRepository.findById(id));
+		return trainingDTOConverter.convertModelToDTO(trainingRepository.findById(id));
 	}
 
 }
