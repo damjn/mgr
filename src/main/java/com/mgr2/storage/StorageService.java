@@ -18,7 +18,7 @@ public interface StorageService {
 
     Resource loadAsResource(String filename);
     
-    MultipartFile loadAsMultipartFile (Path path);
+    MultipartFile loadAsMultipartFile (String path);
 
     void deleteAll();
     

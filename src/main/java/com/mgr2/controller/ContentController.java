@@ -1,5 +1,7 @@
 package com.mgr2.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,5 +56,16 @@ public class ContentController {
 		contentService.deleteContent(contentId);
 		return "CONTENT DELETED";
 	}
+	
+	@RequestMapping(value = "/course_content/{id}", method = RequestMethod.GET)
+	public @ResponseBody List<ContentDTO> getCourseContent(@PathVariable("id") int courseId) {
+		return contentService.getCourseContent(courseId);
+	}
+	
+	@RequestMapping(value = "/file/{id}", method = RequestMethod.GET)
+	public @ResponseBody MultipartFile getFile(@PathVariable("id") int content_id) {
+		return contentService.getFile(content_id);
+	}
+	
 
 }

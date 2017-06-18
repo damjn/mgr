@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "training")
 public class Training implements Serializable {
@@ -38,6 +40,7 @@ public class Training implements Serializable {
 	private String description;
 
 	@OneToMany(mappedBy = "training")
+	@JsonIgnore
 	private Set<Content> content;
 
 	@Digits(integer = 5, fraction = 2)

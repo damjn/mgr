@@ -29,14 +29,14 @@ public class TrainingServiceImpl implements TrainingService {
 	
 	@Override
 	public String saveTraining(Training training) { // pozmieniac na DTO
-		training.setAccepted(1);
+		//training.setAccepted(1);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String name = auth.getName(); //get logged in username
 	    User user = userRepository.findByEmail(name);
 	    training.setUser(user);
 	    System.out.println("opis: " + training.getDescription());
 		trainingRepository.save(training);
-		System.out.println("kursy stworzone przez tego usera: " + user.getCreated_trainings());
+		//System.out.println("kursy stworzone przez tego usera: " + user.getCreated_trainings());
 		return "Training Saved";
 	}
 
@@ -62,6 +62,15 @@ public class TrainingServiceImpl implements TrainingService {
 	@Override
 	public TrainingDTO findById(int id) {
 		return trainingDTOConverter.convertModelToDTO(trainingRepository.findById(id));
+	}
+
+	@Override
+	public String saveTraining(TrainingDTO tDTO, int user_id) {
+		Training tr = trainingDTOConverter.convertDTOtoModel(tDTO);
+		User user = userRepository.findById(user_id);
+		tr.setUser(user);
+		trainingRepository.save(tr);
+		return null;
 	}
 
 }

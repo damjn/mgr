@@ -83,9 +83,9 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public MultipartFile loadAsMultipartFile(Path path) { // chyba nie przydatne
+	public MultipartFile loadAsMultipartFile(String pathString) { // chyba nie przydatne
 															// anymore
-
+		Path path = Paths.get(pathString);
 		String name = path.getFileName().toString();
 		System.out.println("Whole path: " + path.toString() + "filename: " + name);
 		String originalFileName = name;

@@ -29,17 +29,19 @@ public class TrainingDTOConverter {
 		tDTO.setDescription(training.getDescription());
 		tDTO.setContentList(contentDTOConverter.convertSetOfModelsToDTOList(training.getContent()));
 		tDTO.setPrice(training.getPrice());
+		tDTO.setCategory(training.getCategory());
 		return tDTO;
 	}
 	
 	public Training convertDTOtoModel(TrainingDTO tDTO){
 		Training t = new Training();
 		t.setId(tDTO.getId());
-		t.setUser(userDTOConverter.convertDTOtoModel(tDTO.getUserDTO()));
+		//t.setUser(userDTOConverter.convertDTOtoModel(tDTO.getUserDTO())); chyba cza wywalic
 		t.setName(tDTO.getName());
 		t.setDescription(tDTO.getDescription());
 		// t.setContent(); chyba nie potrzebne
 		t.setPrice(tDTO.getPrice());
+		t.setCategory(tDTO.getCategory());
 		return t;
 	}
 	

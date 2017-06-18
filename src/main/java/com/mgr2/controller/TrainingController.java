@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mgr2.dto.ContentDTO;
 import com.mgr2.dto.TrainingDTO;
 import com.mgr2.dto.convertion.TrainingDTOConverter;
+import com.mgr2.model.Training;
 import com.mgr2.repository.TrainingRepository;
 import com.mgr2.service.TrainingService;
 
@@ -38,13 +40,30 @@ public class TrainingController {
 	
 	@RequestMapping(value = "/t_courses",method = RequestMethod.GET)
     public @ResponseBody
-    List<TrainingDTO> getTrainerCourses(){
+    List<TrainingDTO> getLoggedTrainerCourses(){
         return trainingService.getCoursesByLoggedTrainerId();
     }
 	
-	@RequestMapping(value = "/t_courses/{id}",method = RequestMethod.GET)
-    public @ResponseBody TrainingDTO getTrainerCourse(@PathVariable("id") int courseId){
+	@RequestMapping(value = "/course/{id}",method = RequestMethod.GET)
+    public @ResponseBody TrainingDTO getCourse(@PathVariable("id") int courseId){
         return trainingService.findById(courseId);
     }
+	
+	@RequestMapping(value = "/course",method = RequestMethod.POST)
+    public @ResponseBody String addCourse (@RequestBody TrainingDTO training, @RequestParam("user_id") int user_id){
+       return trainingService.saveTraining(training, user_id);
+    }
+	
+	@RequestMapping(value = "/course",method = RequestMethod.PUT)
+    public @ResponseBody String editCourse (@RequestBody TrainingDTO training){
+       return trainingService.saveTraining(training, training.getUserDTO().getId()); // ewentualnie napisac metode bez tego id bo to jest troche bez sensu
+    }
+	
+	
+	@RequestMapping(value = "/course/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody String deleteContent(@PathVariable("id") int courseId) {
+		trainingRepository.delete(courseId);
+		return "CONTENT DELETED";
+	}
 
 }

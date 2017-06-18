@@ -11,7 +11,7 @@ import com.mgr2.model.Training;
 import com.mgr2.model.User;
 
 @Repository("trainingRepository")
-public interface TrainingRepository extends JpaRepository<Training, Long> {
+public interface TrainingRepository extends JpaRepository<Training, Integer> {
 	
 	Training findByName(String name);
 	Training findById(int id);

@@ -1,8 +1,11 @@
 package com.mgr2.service;
 
+import java.util.List;
+
 import org.hibernate.PersistentObjectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mgr2.dto.ContentDTO;
 import com.mgr2.dto.convertion.ContentDTOConverter;
@@ -48,6 +51,20 @@ public class ContentServiceImpl implements ContentService {
 			return "ERROR_WHILE_CONTENT_DELETING";
 		}
 	}
+
+	@Override
+	public List<ContentDTO> getCourseContent(int courseId) {
+		contentDTOConverter.convertListOfModelsToDTOList(contentRepository.findByTrainingId(courseId));
+		return null;
+	}
+
+	@Override
+	public MultipartFile getFile(int content_id) {
+		String path = contentRepository.findById(content_id).getPath();
+		return storageService.loadAsMultipartFile(path);
+	}
+	
+	
 
 	// customerDao.add(CustomerVoConvertion.convertVoToEntity(cVo));
 }

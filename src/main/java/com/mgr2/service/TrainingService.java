@@ -13,4 +13,5 @@ public interface TrainingService {
 	public int findTrainingIdByName(String name);
 	public List<TrainingDTO> getCoursesByLoggedTrainerId();
 	public TrainingDTO findById(int id);
+	public String saveTraining(TrainingDTO training, int user_id);
 }
