@@ -57,9 +57,9 @@ public class ContentController {
 		return "CONTENT DELETED";
 	}
 	
-	@RequestMapping(value = "/course_content/{id}", method = RequestMethod.GET)
-	public @ResponseBody List<ContentDTO> getCourseContent(@PathVariable("id") int courseId) {
-		return contentService.getCourseContent(courseId);
+	@RequestMapping(value = "/training_content/{id}", method = RequestMethod.GET)
+	public @ResponseBody List<ContentDTO> getTrainingContent(@PathVariable("id") int trainingId) {
+		return contentService.getCourseContent(trainingId);
 	}
 	
 	@RequestMapping(value = "/file/{id}", method = RequestMethod.GET)

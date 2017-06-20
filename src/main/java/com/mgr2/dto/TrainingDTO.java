@@ -20,6 +20,7 @@ public class TrainingDTO {
 	private BigDecimal price;
 	// private int accepted; // dodac lub nie
 	private Category category;
+	private BigDecimal averageRate;
 	
 	public int getId() {
 		return id;
@@ -66,5 +67,12 @@ public class TrainingDTO {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+	public BigDecimal getAverageRate() {
+		return averageRate;
+	}
+	public void setAverageRate(BigDecimal averageRate) {
+		this.averageRate = averageRate;
+	}
+	
 	
 }

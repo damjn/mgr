@@ -15,7 +15,7 @@ public class UserDTOConverter {
 		UserDTO uDTO = new UserDTO();
 		uDTO.setId(user.getId());
 		uDTO.setEmail(user.getEmail());
-		uDTO.setPassword(user.getPassword());
+		//uDTO.setPassword(user.getPassword());
 		uDTO.setName(user.getName());
 		uDTO.setLastname(user.getLastName());
 		uDTO.setActive(user.getActive());
@@ -33,7 +33,17 @@ public class UserDTOConverter {
 		return user;
 	}
 	
-	public List<UserDTO> convertSetOfModelsToDTO(List<User> users){
+	public User convertDTOtoModel(UserDTO uDTO, User user){
+		user.setId(uDTO.getId());
+		user.setEmail(uDTO.getEmail());
+		user.setPassword(uDTO.getPassword());
+		user.setName(uDTO.getName());
+		user.setLastName(uDTO.getLastname());
+		user.setActive(uDTO.getActive());
+		return user;
+	}
+	
+	public List<UserDTO> convertListOfModelsToDTOList(List<User> users){
 		List<UserDTO> uDTO = new ArrayList<>();
 		for(User u : users){
 			uDTO.add(convertModelToDTO(u));

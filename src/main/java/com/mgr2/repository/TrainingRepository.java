@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.mgr2.model.Category;
 import com.mgr2.model.Training;
 import com.mgr2.model.User;
 
@@ -16,7 +17,9 @@ public interface TrainingRepository extends JpaRepository<Training, Integer> {
 	Training findByName(String name);
 	Training findById(int id);
 	
+	List<Training> findByCategory(Category category);
 	List<Training> findByUserId(int id);
+	List<Training> findByUserEmail(String email);
 	
 	@Query("SELECT t.id FROM Training t WHERE t.name=:name")
 	int findTrainingIdByName(@Param("name") String name);

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mgr2.dto.ContentDTO;
 import com.mgr2.dto.TrainingDTO;
+import com.mgr2.dto.UserDTO;
 import com.mgr2.dto.convertion.TrainingDTOConverter;
+import com.mgr2.model.Category;
 import com.mgr2.model.Training;
 import com.mgr2.repository.TrainingRepository;
 import com.mgr2.service.TrainingService;
@@ -38,10 +40,23 @@ public class TrainingController {
         return trainingDTOConverter.convertListOfModelsToDTOList(trainingRepository.findAll());
     }
 	
+	@RequestMapping(value = "/courses/{category}",method = RequestMethod.GET)
+    public @ResponseBody
+    List<TrainingDTO> getCategoryCourses(@PathVariable String category){
+        return trainingDTOConverter.convertListOfModelsToDTOList(trainingRepository.findByCategory(Category.valueOf(category)));
+    }
+	
 	@RequestMapping(value = "/t_courses",method = RequestMethod.GET)
     public @ResponseBody
     List<TrainingDTO> getLoggedTrainerCourses(){
         return trainingService.getCoursesByLoggedTrainerId();
+    }
+	
+	@RequestMapping(value = "/u_courses",method = RequestMethod.POST)
+    public @ResponseBody
+    List<TrainingDTO> getUserCourses(@RequestBody UserDTO uDTO){
+        //return trainingDTOConverter.convertListOfModelsToDTOList(trainingRepository.findByUserEmail(email));
+		return trainingService.getUserCourses(uDTO.getEmail());
     }
 	
 	@RequestMapping(value = "/course/{id}",method = RequestMethod.GET)
@@ -56,12 +71,12 @@ public class TrainingController {
 	
 	@RequestMapping(value = "/course",method = RequestMethod.PUT)
     public @ResponseBody String editCourse (@RequestBody TrainingDTO training){
-       return trainingService.saveTraining(training, training.getUserDTO().getId()); // ewentualnie napisac metode bez tego id bo to jest troche bez sensu
+       return trainingService.updateTraining(training);
     }
 	
 	
 	@RequestMapping(value = "/course/{id}", method = RequestMethod.DELETE)
-	public @ResponseBody String deleteContent(@PathVariable("id") int courseId) {
+	public @ResponseBody String deleteCourse(@PathVariable("id") int courseId) {
 		trainingRepository.delete(courseId);
 		return "CONTENT DELETED";
 	}

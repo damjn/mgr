@@ -70,7 +70,23 @@ public class TrainingServiceImpl implements TrainingService {
 		User user = userRepository.findById(user_id);
 		tr.setUser(user);
 		trainingRepository.save(tr);
-		return null;
+		return "TRAINIG SAVED";
+	}
+
+	@Override
+	public List<TrainingDTO> getUserCourses(String email) {
+		User user = userRepository.findByEmail(email);
+		System.out.println("na przyklad mail: " + user.getEmail() + "i nazwa: " + user.getName());
+		Set<Training> userTrainings = user.getTrainings();
+		return trainingDTOConverter.convertSetOfModelsToDTOList(userTrainings);
+	}
+
+	@Override
+	public String updateTraining(TrainingDTO tDTO) {
+		Training training = trainingRepository.findById(tDTO.getId());
+		training = trainingDTOConverter.convertDTOtoModel(tDTO, training);
+		trainingRepository.save(training);
+		return "TRAINING UPDATED";
 	}
 
 }

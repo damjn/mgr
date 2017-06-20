@@ -53,6 +53,10 @@ public class Training implements Serializable {
 	@Column(name = "category")
 	@Enumerated(EnumType.STRING)
 	private Category category;
+	
+	@Digits(integer = 5, fraction = 2)
+	@Column(name = "averageRate")
+	private BigDecimal averageRate;
 
 	public Set<Content> getContent() {
 		return content;
@@ -118,4 +122,13 @@ public class Training implements Serializable {
 		this.category = category;
 	}
 
+	public BigDecimal getAverageRate() {
+		return averageRate;
+	}
+
+	public void setAverageRate(BigDecimal averageRate) {
+		this.averageRate = averageRate;
+	}
+	
+	
 }

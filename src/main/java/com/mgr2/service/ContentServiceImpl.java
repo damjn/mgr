@@ -54,8 +54,7 @@ public class ContentServiceImpl implements ContentService {
 
 	@Override
 	public List<ContentDTO> getCourseContent(int courseId) {
-		contentDTOConverter.convertListOfModelsToDTOList(contentRepository.findByTrainingId(courseId));
-		return null;
+		return contentDTOConverter.convertListOfModelsToDTOList(contentRepository.findByTrainingId(courseId));
 	}
 
 	@Override
