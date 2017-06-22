@@ -1,4 +1,4 @@
-package com.mgr2.service;
+package com.mgr2.service.impl;
 
 import java.util.List;
 import java.util.Set;
@@ -8,12 +8,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.mgr2.configuration.MyUserPrincipal;
 import com.mgr2.dto.TrainingDTO;
 import com.mgr2.dto.convertion.TrainingDTOConverter;
 import com.mgr2.model.Training;
 import com.mgr2.model.User;
 import com.mgr2.repository.TrainingRepository;
 import com.mgr2.repository.UserRepository;
+import com.mgr2.service.TrainingService;
 
 @Service("trainingService")
 public class TrainingServiceImpl implements TrainingService {
@@ -52,9 +54,10 @@ public class TrainingServiceImpl implements TrainingService {
 
 	@Override
 	public List<TrainingDTO> getCoursesByLoggedTrainerId() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    String name = auth.getName(); //get logged in username
-	    User user = userRepository.findByEmail(name);
+		MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//	    String name = auth.getName(); //get logged in username
+//	    User user = userRepository.findByEmail(name);
 	    List<Training> trainerCourses = trainingRepository.findByUserId(user.getId());
 		return trainingDTOConverter.convertListOfModelsToDTOList(trainerCourses);
 	}

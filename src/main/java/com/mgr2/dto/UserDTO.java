@@ -8,6 +8,7 @@ public class UserDTO {
 	private String name;
 	private String lastname;
 	private int active;
+	private int points;
 	public int getId() {
 		return id;
 	}
@@ -44,6 +45,11 @@ public class UserDTO {
 	public void setActive(int active) {
 		this.active = active;
 	}
+	public int getPoints() {
+		return points;
+	}
+	public void setPoints(int points) {
+		this.points = points;
+	}
 	
-
 }

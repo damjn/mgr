@@ -1,4 +1,4 @@
-package com.mgr2.service;
+package com.mgr2.service.impl;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import com.mgr2.dto.convertion.ContentDTOConverter;
 import com.mgr2.model.Content;
 import com.mgr2.repository.ContentRepository;
 import com.mgr2.repository.TrainingRepository;
+import com.mgr2.service.ContentService;
 import com.mgr2.storage.StorageService;
 
 @Service("contentService")

@@ -18,7 +18,7 @@ public class Content implements Serializable {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="content_id")
+	@Column(name="id")
 	private int id;
 	
 	@Column(name="path")

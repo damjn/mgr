@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mgr2.configuration.MyUserPrincipal;
 import com.mgr2.model.User;
 import com.mgr2.service.UserService;
 
@@ -27,6 +28,14 @@ public class LoginController {
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
+	
+	@RequestMapping(value={"/login2"}, method = RequestMethod.GET)
+	public ModelAndView login2(){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("login2");
+		return modelAndView;
+	}
+	
 	
 	
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
@@ -63,6 +72,8 @@ public class LoginController {
 	public ModelAndView admin_home(){
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		MyUserPrincipal p = (MyUserPrincipal) auth.getPrincipal();
+		System.out.println("id Usera: " + p.getId());
 		User user = userService.findUserByEmail(auth.getName());
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");

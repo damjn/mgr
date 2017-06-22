@@ -49,14 +49,12 @@ public class User implements Serializable {
 	private String lastName;
 	@Column(name = "active")
 	private int active;
+	@Column(name = "points")
+	private int points;
 	@JsonIgnore
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
-	@JsonIgnore
-	@ManyToMany
-	@JoinTable(name = "user_task", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
-	private Set<Task> tasks;
 	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "user_training", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "training_id"))
@@ -65,20 +63,17 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user")
 	private Set<Training> created_trainings;
 	
+	//@JoinTable(name = "user_task", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.user", cascade=CascadeType.ALL)
+	private Set<UserTask> tasks;
+	
 	public Set<Training> getTrainings() {
 		return trainings;
 	}
 
 	public void setTrainings(Set<Training> trainings) {
 		this.trainings = trainings;
-	}
-
-	public Set<Task> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(Set<Task> tasks) {
-		this.tasks = tasks;
 	}
 
 	public int getId() {
@@ -129,6 +124,14 @@ public class User implements Serializable {
 		this.active = active;
 	}
 
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
+
 	public Set<Role> getRoles() {
 		return roles;
 	}
@@ -144,7 +147,13 @@ public class User implements Serializable {
 	public void setCreated_trainings(Set<Training> created_trainings) {
 		this.created_trainings = created_trainings;
 	}
-	
-	
+
+	public Set<UserTask> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(Set<UserTask> tasks) {
+		this.tasks = tasks;
+	}
 
 }

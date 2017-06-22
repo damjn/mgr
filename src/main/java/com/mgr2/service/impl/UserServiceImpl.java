@@ -1,4 +1,4 @@
-package com.mgr2.service;
+package com.mgr2.service.impl;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -17,6 +17,7 @@ import com.mgr2.model.User;
 import com.mgr2.repository.RoleRepository;
 import com.mgr2.repository.TrainingRepository;
 import com.mgr2.repository.UserRepository;
+import com.mgr2.service.UserService;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {

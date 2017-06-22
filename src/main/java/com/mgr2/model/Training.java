@@ -26,7 +26,7 @@ public class Training implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "training_id")
+	@Column(name = "id")
 	private int id;
 
 	@ManyToOne

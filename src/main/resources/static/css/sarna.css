@@ -1,0 +1,263 @@
+
+body {
+    font-family: 'Karla', sans-serif;
+}
+
+ul.main-menu {
+
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+ul.main-menu li {
+    float: left;
+}
+
+ul.main-menu li a {
+    display: block;
+    text-align: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+ul.main-menu li a:hover {
+    display: block;
+    text-align: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+
+    font-weight: bold;
+}
+
+ul.main-menu li a:hover:not(.active) {
+    background-color: dimgrey;
+}
+
+ul.main-menu li a.active {
+}
+
+ul.main-menu li.right {
+    float: right;
+}
+ul.main-menu li.right p{
+    float: right;
+    margin:10px;
+    padding:10px;
+}
+
+@media screen and (max-width: 600px) {
+    ul.main-menu li.right,
+    ul.main-menu li {
+        float: none;
+    }
+}
+
+label {
+    display: block;
+  
+    padding: 20px 30px;
+    text-decoration: none;
+
+}
+
+ul.small-menu {
+    margin-top: 10px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: dimgrey;
+}
+
+ul.small-menu li {
+    float: left;
+}
+
+ul.small-menu li a {
+    display: block;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 12px;
+    border-right: 1px solid white;
+}
+
+.curse-advertisement {
+    height: 250px;
+    width: 200px;
+
+    float: left;
+    margin: 10px;
+    border: 1px solid;
+}
+
+.curse-photo {
+    height: 200px;
+    width: 200px;
+
+    float: left;
+}
+
+.curse-label {
+    height: 50px;
+    width: 200px;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+
+}
+
+.curse-description {
+    height: 20px;
+    width: 200px;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    padding: 0px;
+    font-size: 10px;
+    /*overflow: hidden;*/
+
+}
+
+input[type="text"],input[type="file"],textarea {
+    padding: 10px;
+    border: solid 1px #fff;
+    box-shadow: inset 1px 1px 2px 0 #707070;
+    transition: box-shadow 0.3s;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+
+}
+
+input[type="text"]:focus,textarea:focus
+input[type="text"].focus {
+    box-shadow: inset 1px 1px 2px 0 dimgrey;
+}
+
+input:focus {
+    outline: none;
+}
+
+#findCourse {
+    margin: 10px;
+    margin-left: 30px;
+    width: 300px;
+}
+
+.nav > li > a:hover {
+    background-color: dimgrey;
+    color: white;
+    font-size: 12px;
+
+}
+
+.nav > li > a {
+    background-color: white;
+    color: black;
+    font-size: 12px;
+}
+
+.thumbnail:hover {
+    border: 1px solid dimgrey;
+}
+
+.btn-default:hover {
+    background-color: dimgrey;
+    color: white;
+}
+
+ul.main-menu li a {
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+}
+
+ul.small-menu li a:hover:not(.active) {
+    background-color: dimgrey;
+}
+
+ul.small-menu li a.active {
+    background-color: dimgrey;
+}
+
+ul.small-menu li.right {
+    float: right;
+}
+
+@media screen and (max-width: 600px) {
+    ul.small-menu li.right,
+    ul.small-menu li {
+        float: none;
+    }
+}
+
+#title {
+    border: 3px solid white;
+    padding: 5px;
+}
+
+#mainLogo {
+    padding: 0px;
+    margin: 10px;
+    margin-left: 15px;
+}
+
+#login {
+    margin: 10px;
+}
+
+#curseLabel {
+    margin: 20px 20px 0px 20px;
+    font-size: 12px;
+}
+
+.main-menu-items {
+    font-size: 15px !important;
+
+}
+
+div.well{
+  height: 250px;
+} 
+
+.Absolute-Center {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.Absolute-Center.is-Responsive {
+  width: 50%; 
+  height: 50%;
+  min-width: 200px;
+  max-width: 400px;
+  padding: 40px;
+}
+
+#logo-container{
+
+  margin-bottom: 10px;
+  width:200px;
+  height:30px;
+  padding: 0px 30px;
+    margin:30px;
+}
+
+        .curse{
+            margin:30px;
+        }
+        
+        .curseButton{
+            margin: 0px 10px;
+        }

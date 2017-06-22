@@ -29,7 +29,7 @@ import com.mgr2.service.UserService;
 import com.mgr2.storage.StorageService;
 
 
-//DO WYJEBANIA
+//DO WYWALENIA
 @Controller
 public class AddCourseController {
 

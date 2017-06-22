@@ -1,4 +1,4 @@
-package com.mgr2.service;
+package com.mgr2.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +9,7 @@ import com.mgr2.model.Rating;
 import com.mgr2.model.User;
 import com.mgr2.repository.RatingRepository;
 import com.mgr2.repository.UserRepository;
+import com.mgr2.service.RatingService;
 
 @Service("ratingService")
 public class RatingServiceImpl implements RatingService{

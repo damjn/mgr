@@ -19,6 +19,7 @@ public class UserDTOConverter {
 		uDTO.setName(user.getName());
 		uDTO.setLastname(user.getLastName());
 		uDTO.setActive(user.getActive());
+		uDTO.setPoints(user.getPoints());
 		return uDTO;
 	}
 	
@@ -30,6 +31,7 @@ public class UserDTOConverter {
 		user.setName(uDTO.getName());
 		user.setLastName(uDTO.getLastname());
 		user.setActive(uDTO.getActive());
+		user.setPoints(uDTO.getPoints());
 		return user;
 	}
 	
@@ -40,6 +42,7 @@ public class UserDTOConverter {
 		user.setName(uDTO.getName());
 		user.setLastName(uDTO.getLastname());
 		user.setActive(uDTO.getActive());
+		user.setPoints(uDTO.getPoints());
 		return user;
 	}
 	
