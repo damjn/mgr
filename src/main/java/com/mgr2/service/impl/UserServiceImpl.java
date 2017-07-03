@@ -1,8 +1,11 @@
 package com.mgr2.service.impl;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,11 +15,15 @@ import com.mgr2.dto.ChangePassDTO;
 import com.mgr2.dto.UserDTO;
 import com.mgr2.dto.convertion.UserDTOConverter;
 import com.mgr2.model.Role;
+import com.mgr2.model.Task;
 import com.mgr2.model.Training;
 import com.mgr2.model.User;
+import com.mgr2.model.UserTask;
 import com.mgr2.repository.RoleRepository;
+import com.mgr2.repository.TaskRepository;
 import com.mgr2.repository.TrainingRepository;
 import com.mgr2.repository.UserRepository;
+import com.mgr2.repository.UserTaskRepository;
 import com.mgr2.service.UserService;
 
 @Service("userService")
@@ -29,9 +36,13 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Autowired
-	TrainingRepository trainingRepository;
+	private TrainingRepository trainingRepository;
 	@Autowired
-	UserDTOConverter userDTOConverter;
+	private UserDTOConverter userDTOConverter;
+	@Autowired
+	private TaskRepository taskRepository;
+	@Autowired
+	private UserTaskRepository userTaskRepository;
 
 	@Override
 	public User findUserByEmail(String email) {
@@ -64,6 +75,19 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		Role userRole = roleRepository.findByRole("CLIENT");
 		user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+		List<Task> tList = taskRepository.findAll();
+		Set<UserTask> uts = user.getTasks();
+		for(Task t : tList){
+			UserTask ut = new UserTask();
+			ut.setUser(user);
+			ut.setTask(t);
+			ut.setCreatedDate(new Date());
+			ut.setDone(0);
+			String token = UUID.randomUUID().toString();
+			ut.setToken(token);
+			userTaskRepository.save(ut);
+			//uts.add(ut); chyba to by nie zadzialalo
+		}
 		userRepository.save(user);
 		return "USER ADDED";
 	}

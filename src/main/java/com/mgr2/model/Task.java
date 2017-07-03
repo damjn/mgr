@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,8 +36,10 @@ public class Task implements Serializable {
 	@Column(name="description")
 	private String description;
 	
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "pk.task")
+	@Transient
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.task")
 	private Set<UserTask> tasks;
 
 	public int getId() {
@@ -78,6 +81,30 @@ public class Task implements Serializable {
 	public void setTasks(Set<UserTask> tasks) {
 		this.tasks = tasks;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Task other = (Task) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 }

@@ -7,5 +7,5 @@ import com.mgr2.model.UserTaskId;
 
 public interface UserTaskRepository extends JpaRepository<UserTask, UserTaskId>{
 	
-
+	UserTask findByToken(String token);
 }

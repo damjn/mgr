@@ -38,7 +38,7 @@ public class User implements Serializable {
 	private String email;
 	@Column(name = "password")
 	@Length(min = 5, message = "*Your password must have at least 5 characters")
-	@NotEmpty(message = "*Please provide your password")
+	//@NotEmpty(message = "*Please provide your password")
 	@Transient
 	private String password; // przekminic zeby dac @JsonProperty(access = Access.WRITE_ONLY)
 	@Column(name = "name")
@@ -64,8 +64,10 @@ public class User implements Serializable {
 	private Set<Training> created_trainings;
 	
 	//@JoinTable(name = "user_task", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
+	//@Transient
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.user", cascade=CascadeType.ALL)
+	@Transient
+	@OneToMany//(mappedBy = "pk.user", cascade=CascadeType.ALL)
 	private Set<UserTask> tasks;
 	
 	public Set<Training> getTrainings() {
@@ -155,5 +157,29 @@ public class User implements Serializable {
 	public void setTasks(Set<UserTask> tasks) {
 		this.tasks = tasks;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	
 
 }

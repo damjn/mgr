@@ -2,10 +2,14 @@ package com.mgr2.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
+import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mgr2.dto.TaskDTO;
 import com.mgr2.dto.convertion.TaskDTOConverter;
 import com.mgr2.model.Task;
@@ -13,6 +17,7 @@ import com.mgr2.model.User;
 import com.mgr2.model.UserTask;
 import com.mgr2.repository.TaskRepository;
 import com.mgr2.repository.UserRepository;
+import com.mgr2.repository.UserTaskRepository;
 import com.mgr2.service.TaskService;
 import com.mgr2.service.UserService;
 
@@ -30,6 +35,9 @@ public class TaskServiceImpl implements TaskService{
 	
 	@Autowired
 	TaskDTOConverter taskDTOConverter;
+	
+	@Autowired
+	UserTaskRepository userTaskRepository;
 
 	@Override
 	public String saveTask(TaskDTO tDTO) {
@@ -44,8 +52,11 @@ public class TaskServiceImpl implements TaskService{
 			ut.setUser(u);
 			ut.setCreatedDate(new Date());
 			ut.setDone(0);
-			u.getTasks().add(ut);
-			userRepository.save(u);
+			String token = UUID.randomUUID().toString();
+			ut.setToken(token);
+			userTaskRepository.save(ut);
+//			u.getTasks().add(ut);
+//			userRepository.save(u);
 		}
 		
 		

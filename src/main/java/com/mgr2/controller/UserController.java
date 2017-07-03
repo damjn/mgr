@@ -39,7 +39,7 @@ public class UserController {
     }
 	
 	@RequestMapping(value = "/getUser",method = RequestMethod.POST)
-    public @ResponseBody UserDTO getUser(@RequestBody UserDTO uDTO){
+    public @ResponseBody UserDTO getUserOld(@RequestBody UserDTO uDTO){
         return userDTOConverter.convertModelToDTO(userRepository.findByEmail(uDTO.getEmail()));
     }
 	
@@ -62,6 +62,11 @@ public class UserController {
 	public @ResponseBody String deleteUser(@PathVariable("id") int userId) {
 		userRepository.delete(userId);
 		return "USER DELETED";
+	}
+	
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+	public @ResponseBody UserDTO getUser(@PathVariable("id") int userId) {
+		return userDTOConverter.convertModelToDTO(userRepository.findOne(userId));
 	}
 
 	@RequestMapping(value = "/buyTraining", method = RequestMethod.POST)

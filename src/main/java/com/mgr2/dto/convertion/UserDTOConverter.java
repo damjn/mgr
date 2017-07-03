@@ -38,7 +38,7 @@ public class UserDTOConverter {
 	public User convertDTOtoModel(UserDTO uDTO, User user){
 		user.setId(uDTO.getId());
 		user.setEmail(uDTO.getEmail());
-		user.setPassword(uDTO.getPassword());
+		//user.setPassword(uDTO.getPassword());
 		user.setName(uDTO.getName());
 		user.setLastName(uDTO.getLastname());
 		user.setActive(uDTO.getActive());
