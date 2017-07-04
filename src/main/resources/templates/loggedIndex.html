@@ -31,6 +31,7 @@
     </li>
 
     <li class="right">
+        <a  th:if="${user != null}" href="/index_l"  style="float: right;margin:10px; padding:10px;" class="btn btn-default curseButton"> My account </a>
         <form id="logoutForm" action="/logout"></form>
 
         <form th:action="@{/logout}" method="get">
@@ -38,8 +39,13 @@
                     type="Submit">Logout
             </button>
         </form>
-    <li class="right"><p id="loggedUser">Zalogowano jako: <span
-            th:text="${user.user.getName() + ' ' + user.user.getLastName() }"></span></p></li>
+    <li class="right"><p id="loggedUser">Logged as, <span
+            th:text="${user.user.getName() + ' ' + user.user.getLastName() +',' }">,</span>
+
+    Points on your account:
+    <span
+            th:text="${user.user.getPoints() }"></span>
+</p></li>
 </ul>
 <em></em>
 
@@ -75,7 +81,7 @@
 
 
 <div class="col-md-4">
-    <label for="myCurses"> Dodaj nowy kurs: </label>
+    <label for="myCurses" style="margin:30px;"> Dodaj nowy kurs: </label>
     <form id="cursesForm">
         <label for="courseName">Nazwa kursu:</label>
         <input id="courseName" style="width:400px;" type="text" placeholder="Nazwa kursu, np angular js Tutorial...">
@@ -104,21 +110,12 @@
 </div>
 
 
-<div class="col-md-4">
-    <label for="myCurses"> Kursy dodane przez użytkownika: admin </label>
-    <ol id="myCurses">
+<div class="col-md-8">
+    <label for="myCurses" style="margin: 30px;"> Kursy dodane przez użytkownika: admin </label>
+    <div id="myCurses" style="border:none;margin:0px;">
 
 
-    </ol>
-</div>
-
-
-<div class="col-md-3">
-    <label> Materialy dostepne w kursie: <span id="courseNameTwo"></span> </label>
-    <p id="courseContentaxdas"></p>
-    <p id="courseContent"></p>
-
-
+    </div>
 </div>
 
 
@@ -214,7 +211,8 @@
                     Opis:
                     <input type="text" name="description" style="width:100%;" id="courseContentDescription"/><br/>
                     Order:
-                    <input type="text" name="orderNr" style="width:100%;" id="courseContentOrderNumber"/><br/>
+                    <input type="number" min="0" step="1" name="orderNr" style="width:100%;" id="courseContentOrderNumber"/><br/>
+
                     <input type="text" name="trainingId" style="visibility: hidden;" id="trainingId"/>
 
                     <input type="text" name="name" type="hidden"> <br/>

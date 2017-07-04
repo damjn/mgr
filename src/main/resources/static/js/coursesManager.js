@@ -11,7 +11,7 @@ function loadMyCourses() {
         }
         else {
             for (var i = 0; i < data.length; i++) {
-                $('#myCurses').append("<li class='curse'> <label>Nazwa kursu:<a href='/courseDetails/"+data[i].id+"' class='courseLink'>" + data[i].name + " </a></label> <br/> <b>Opis</b>:" + data[i].description + " <br/> <b>Cena:</b> " + data[i].price + "zl.<a data-toggle='modal' data-id='" + data[i].id + "'  data-target='#modalUpdate' class='update-Course'><i class='fa fa-plus'/><br/>Edytuj</a>.<a data-toggle='modal' data-id='" + data[i].id + "'  data-target='#modalAddContent' class='add-Content'>Dodaj content!</a> <p id='courseContent"+data[i].id+"'></p></li>  <hr>" );
+                $('#myCurses').append("<div class='curse col-md-8 courseArea'> <a data-toggle='modal' data-id='" + data[i].id + "'  data-target='#modalUpdate' style='float:right;' class='update-Course btn btn-info'>Edit</a><a data-toggle='modal' data-id='" + data[i].id + "'  data-target='#modalAddContent' style='float:right;' class='add-Content btn btn-info'>Dodaj content!</a> <label>Nazwa kursu:</label><h1><a '" + data[i].id + "' class='courseLink'>" + data[i].name + " </a></h1> <br/><label>Opis kursu:</label><span class='attribute-value'>" + data[i].description + " </span><br/> <label>Cena kursu:</label><span class='attribute-value'>" + data[i].price + " zł. </span>  <p id='courseContent" + data[i].id + "'></p></div></div>");
                 loadCourseData(data[i].id);
             }
         }
@@ -22,20 +22,19 @@ $(document).on("click", ".removeCourse", function (e) {
     e.preventDefault();
     var _self = $(this);
     var myBookId = _self.data('id');
-    var value = $("#courseId2").append(myBookId);
-
+    $("#courseId2").append(myBookId);
 });
 
 
-
-
 $(document).on("click", ".add-Content", function (e) {
+    $("#courseContentOrderNumber").val('');
+    $("#courseContentDescription").val('');
+    $("#courseContentFile").val('');
     e.preventDefault();
     var _self = $(this);
     var myBookId = _self.data('id');
     var ta = document.getElementById('trainingId');
     ta.value = myBookId;
-    alert(ta.value);
 });
 
 
@@ -51,13 +50,12 @@ function addNewCourse() {
         "price": price,
         "category": category
     }
-    alert('category' +category);
     $.ajax({
         url: './course?user_id=1',
-        type:"POST",
+        type: "POST",
         data: JSON.stringify(course),
-        contentType:"application/json; charset=utf-8",
-        dataType:"json",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
         error: function (xhr, ajaxOptions, thrownError) {
             $('#alertAdd').show();
             loadMyCourses();
@@ -72,14 +70,14 @@ $(document).on("click", ".update-Course", function (e) {
     var _self = $(this);
     var myBookId = _self.data('id');
     var value = $("#courseId").empty().append(myBookId);
-     $.get(
-     "./course/" + myBookId,
-     function (data) {
-     $("#courseNamePopUp").val(data.name);
-     $("#courseDescPopUp").val(data.description);
-     $("#coursePricePopUp").val(data.price);
-     $("#courseCategoryPopUp").val(data.category);
-     });
+    $.get(
+        "./course/" + myBookId,
+        function (data) {
+            $("#courseNamePopUp").val(data.name);
+            $("#courseDescPopUp").val(data.description);
+            $("#coursePricePopUp").val(data.price);
+            $("#courseCategoryPopUp").val(data.category);
+        });
 });
 
 $(document).on("click", ".add-Course", function (e) {
@@ -97,18 +95,15 @@ $(document).on("click", ".deleteContentModal2", function (e) {
 });
 
 
-
-
-
 function updateCurseData(id) {
 
     var name = $("#courseNamePopUp").val();
-    var description =  $("#courseDescPopUp").val();
+    var description = $("#courseDescPopUp").val();
     var price = $("#coursePricePopUp").val();
     var category = $("#courseCategoryPopUp").val();
 
     var course = {
-        "id":id,
+        "id": id,
         "name": name,
         "description": description,
         "price": price,
@@ -119,13 +114,12 @@ function updateCurseData(id) {
 
     $.ajax({
         url: './course',
-        type:"PUT",
+        type: "PUT",
         data: JSON.stringify(course),
-        contentType:"application/json; charset=utf-8",
-        dataType:"json",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
         async: false,
-        success: function(data) {
-            alert('siema');
+        success: function (data) {
             $('#alertUpdate').show();
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -135,9 +129,6 @@ function updateCurseData(id) {
 
 
     })
-
-
-
 
 
 }
@@ -185,21 +176,20 @@ $(function () {
 });
 
 
-function loadCourseData(id){
-    $.get( "/course/"+id, function (data) {
-        if (data.length == 0){
+function loadCourseData(id) {
+    $.get("/course/" + id, function (data) {
+        if (data.length == 0) {
 
         }
-        else{
-            $('#courseContent' +id).append("<ol id='courseDataList"+id+"'></ol>")
-            if(0 < data.contentList.length) {
-                console.log('here you go' + id )
+        else {
+            $('#courseContent' + id).append("<ol id='courseDataList" + id + "'></ol>")
+            if (0 < data.contentList.length) {
                 for (var i = 0; i < data.contentList.length; i++) {
-                    $('#courseDataList'+id).append("<li><p> <label>Opis:</label><span class='courseItemDescription'>" +data.contentList[i].description + "</span><br/><label>Zrodlo:</label><a data-toggle='modal' data-id='" + data.contentList[i].id + "'  data-target='#deleteContentModal' class='deleteContentModal2'>Usun material</a>    </p></li>");
+                    $('#courseDataList' + id).append("<li><p> <label>Opis:</label><span class='courseItemDescription'>" + data.contentList[i].description + "</span><br/><a data-toggle='modal' data-id='" + data.contentList[i].id + "'  data-target='#deleteContentModal' class='deleteContentModal2 btn btn-info'>Delete Content</a ></p></li>");
                 }
             }
-            else{
-                $('#courseContent' +id).append("<p> Na ta chwile brak materialow dla kursu!</p>")
+            else {
+                $('#courseContent' + id).append("<p> Na ta chwile brak materialow dla kursu!</p>")
             }
         }
     });

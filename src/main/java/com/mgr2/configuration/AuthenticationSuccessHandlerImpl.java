@@ -29,6 +29,6 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
     	MyUserPrincipal user = (MyUserPrincipal) authentication.getPrincipal();
      //   String responseMsg = userTaskService.handle24hLoginTask(user.getId());
      //   System.out.println("suuuuukces " + responseMsg);
-        redirectStrategy.sendRedirect(request, response, "/home");
+        redirectStrategy.sendRedirect(request, response, "/index_l");
     }
 }
