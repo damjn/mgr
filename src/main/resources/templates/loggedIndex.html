@@ -1,6 +1,6 @@
 <!DOCTYPE html >
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8"/>
@@ -25,13 +25,21 @@
 
 <ul class="main-menu">
     <li><a class="active" href="#home" id="mainLogo"><img width="151" height="38" src="/images/logo.jpg"/></a></li>
-    
+
     <li><input type="text" aria-label="Szukaj kursów: " placeholder="Szukaj Kursów..." id="findCourse">
         <button type="button" class="btn btn-default" id="courseLookupButton">Szukaj</button>
     </li>
 
-    <li class="right"><form id="logoutForm" action="/logout"></form><button type="button" class="btn btn-default curseButton" onclick="logout();">Wyloguj</button></li>
-      <li class="right"><p id="loggedUser">Zalogowano jako: admin</p></li>
+    <li class="right">
+        <form id="logoutForm" action="/logout"></form>
+
+        <form th:action="@{/logout}" method="get">
+            <button class="btn btn-default curseButton" name="registration"
+                    type="Submit">Logout
+            </button>
+        </form>
+    <li class="right"><p id="loggedUser">Zalogowano jako: <span
+            th:text="${user.user.getName() + ' ' + user.user.getLastName() }"></span></p></li>
 </ul>
 <em></em>
 
@@ -47,45 +55,73 @@
 </ul>
 
 <ul class="nav nav-pills" id="submenu2">
-        <div class="alert alert-success" id="alertDeleted" hidden="hidden">
-    <button type="button" class="close" data-hide="alert">&times;</button>
-Pomyslnie usunieto kurs z bazy.
-</div>
-        <div class="alert alert-success" style="display:none; margin:20px 10px;" id="alertUpdate">
-         <button class="close" data-dismiss="alert">&times;</button>
-				<span id="success">
+    <div class="alert alert-success" id="alertAdd" hidden="hidden">
+        <button type="button" class="close" data-hide="alert">&times;</button>
+        Dodano nowy kurs
+    </div>
+
+    <div class="alert alert-success" id="alertContentDelete" hidden="hidden">
+        <button type="button" class="close" data-hide="alert">&times;</button>
+        Pomyślnie usunięto element kursu.
+    </div>
+
+    <div class="alert alert-success" style="display:none; margin:20px 10px;" id="alertUpdate">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <span id="success">
 					<b>Zaktualizowane dane kursu.</b>
 				</span>
-        </div>
+    </div>
 </ul>
 
 
-
 <div class="col-md-4">
-<label for="myCurses"> Dodaj nowy kurs: </label>
-<form id="cursesForm">
-    <label for="curseName">Nazwa kursu:</label>
-    <input id="curseName" style="width:400px;" type="text" placeholder="Nazwa kursu, np angular js Tutorial...">
-    <label for="curseDesc">Opis kursu:</label>
-    <textarea for="curseDesc" cols="50" rows="4" placeholder="Dokładny opis kursu..."></textarea>
-    <button type="button" class="btn btn-default" >Dodaj nowy kurs!</button>
-    
-</form>    
+    <label for="myCurses"> Dodaj nowy kurs: </label>
+    <form id="cursesForm">
+        <label for="courseName">Nazwa kursu:</label>
+        <input id="courseName" style="width:400px;" type="text" placeholder="Nazwa kursu, np angular js Tutorial...">
+        <label for="coursePrice">Cena kursu:</label>
+        <input id="coursePrice" style="width:400px;" type="text" placeholder="Cena Kursu...">
+        <label for="courseCategory">Kategoria kursu:</label>
+        <select id="courseCategory" style="width:400px;" class="form-control"
+                placeholder="Kategoria Kursu np. programowanie..">
+
+            <option value="PROGRAMMING"> Programming</option>
+            <option value="GRAPHICS"> Graphics</option>
+            <option value=" BUSINESS"> Business</option>
+            <option value="HEALTH"> Health</option>
+            <option value="FASHION "> Fashion</option>
+            <option value="SPORT"> Sport</option>
+            <option value="OTHER"> Other</option>
+
+        </select>
+
+        <label for="courseDesc">Opis Kursu:</label>
+        <textarea id="courseDesc" cols="50" rows="4" placeholder="Dokładny opis kursu..."></textarea>
+        <button type="button" class="btn btn-default" onclick="addNewCourse();">Dodaj nowy kurs!</button>
+
+
+    </form>
 </div>
-    
-    
+
+
 <div class="col-md-4">
     <label for="myCurses"> Kursy dodane przez użytkownika: admin </label>
-<ol id="myCurses">
-    
+    <ol id="myCurses">
 
-</ol>   
+
+    </ol>
 </div>
-    
-    
 
 
-    
+<div class="col-md-3">
+    <label> Materialy dostepne w kursie: <span id="courseNameTwo"></span> </label>
+    <p id="courseContentaxdas"></p>
+    <p id="courseContent"></p>
+
+
+</div>
+
+
 <!-- Modal -->
 <div class="modal fade" id="modalUpdate" role="dialog">
     <div class="modal-dialog">
@@ -98,24 +134,39 @@ Pomyslnie usunieto kurs z bazy.
             </div>
             <div class="modal-body">
                 Nazwa Kursu:
-                <input type="text" style="width:100%;" id="courseNamePopUp" /><br/>
-                Opis Kursu:
-                <textarea style="width:100%;" id="courseDescPopUp" ></textarea>
-                <br/>
-                 <span id="courseId"></span>
+                <input type="text" style="width:100%;" id="courseNamePopUp"/><br/>
+                Cena Kursu:
+                <input type="text" style="width:100%;" id="coursePricePopUp"/><br/>
 
-            
+                Kategoria Kursu:
+                <select id="courseCategoryPopUp" style="width:100%;" class="form-control"
+                        placeholder="Kategoria Kursu np. programowanie..">
+
+                    <option value="PROGRAMMING"> Programming</option>
+                    <option value="GRAPHICS"> Graphics</option>
+                    <option value=" BUSINESS"> Business</option>
+                    <option value="HEALTH"> Health</option>
+                    <option value="FASHION "> Fashion</option>
+                    <option value="SPORT"> Sport</option>
+                    <option value="OTHER"> Other</option>
+
+                </select>
+                Opis Kursu:
+                <textarea style="width:100%;" id="courseDescPopUp"></textarea>
+                <br/>
+                <span style="visibility: hidden;" id="courseId"></span>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="offset3 btn btn-primary btn-round" data-dismiss="modal" onclick="updateCurseData($('#courseId').html());">Zapisz
+                <button type="button" class="offset3 btn btn-primary btn-round" data-dismiss="modal"
+                        onclick="updateCurseData($('#courseId').html());">Zapisz
                 </button>
             </div>
         </div>
     </div>
 </div>
-    
-    
+
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -127,13 +178,15 @@ Pomyslnie usunieto kurs z bazy.
                 <h4 class="modal-title">Usuń</h4>
             </div>
             <div class="modal-body">
-                <p>Czy na pewno chcesz usunąć kurs (zmiany nie będą mogły być cofnięte)? <span style="visibility:hidden;" id="courseId2"></span>
+                <p>Czy na pewno chcesz usunąć kurs (zmiany nie będą mogły być cofnięte)? <span
+                        style="visibility:hidden;" id="courseId2"></span>
                 </p>
 
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="offset3 btn btn-primary btn-round" data-dismiss="modal" onclick="deleteCourse($('#courseId2').html());">Usuń Kurs
+                <button type="button" class="offset3 btn btn-primary btn-round" data-dismiss="modal"
+                        onclick="deleteCourse($('#courseId2').html());">Usuń Kurs
                 </button>
                 <button type="button" class="offset3 btn btn-primary btn-round" data-dismiss="modal">Zamknij
                 </button>
@@ -141,18 +194,72 @@ Pomyslnie usunieto kurs z bazy.
         </div>
     </div>
 </div>
-    
-    
 
 
-    
-    
-    
-    
-    
+<!-- Modal -->
+<div class="modal fade" id="modalAddContent" role="dialog">
+    <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="modalContentAdd">Dodaj do kursu:</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form2" action="/file" method="post" enctype="multipart/form-data">
 
+                    Dodaj Plik:
+                    <input type="file" name="file" style="width:100%;" id="courseContentFile"/><br/>
+                    Opis:
+                    <input type="text" name="description" style="width:100%;" id="courseContentDescription"/><br/>
+                    Order:
+                    <input type="text" name="orderNr" style="width:100%;" id="courseContentOrderNumber"/><br/>
+                    <input type="text" name="trainingId" style="visibility: hidden;" id="trainingId"/>
 
+                    <input type="text" name="name" type="hidden"> <br/>
+                    <span id="trainingName" style="visibility: hidden;"></span>
+
+                    <input type="submit" class="offset3 btn btn-primary btn-round"
+                           value="Dodaj do kursu!">
+                    </input>
+                    <div class="modal-footer">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="deleteContentModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Usuń</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Czy na pewno chcesz usunąć atrybut? (zmiany nie będą mogły być cofnięte)? <span
+                                style="visibility:hidden;" id="deleteContentId"></span>
+                        </p>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="offset3 btn btn-primary btn-round" data-dismiss="modal"
+                                onclick="deleteContent($('#deleteContentId').html());">Usuń Kurs
+                        </button>
+                        <button type="button" class="offset3 btn btn-primary btn-round" data-dismiss="modal">Zamknij
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 </html>
 

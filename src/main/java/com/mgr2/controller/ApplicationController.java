@@ -2,6 +2,7 @@ package com.mgr2.controller;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,6 +52,16 @@ public class ApplicationController {
 		MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		model.addObject("user", user);
 		model.setViewName("course");
+		return model;
+	}
+
+	@RequestMapping(value = "/courseDetails/{id}", method = RequestMethod.GET)
+	public ModelAndView courseDetailsPage(@PathVariable("id") int courseId) {
+		ModelAndView model = new ModelAndView();
+		MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		model.addObject("user", user);
+		model.addObject("id",courseId);
+		model.setViewName("coursePage");
 		return model;
 	}
 	

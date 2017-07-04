@@ -1,7 +1,16 @@
 function logout() {
-    alert('logout');
-            document.getElementById("logoutForm").submit();
-        };
+        $.ajax({
+            url : 'logout',
+            type : 'POST',
+            success : function(data) {
+                window.location ="/index_l";
+            },
+            error : function(data) {
+                console.log(data);
+            }
+        });
+
+};
 
 
 

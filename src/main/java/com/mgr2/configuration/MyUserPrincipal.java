@@ -15,7 +15,7 @@ public class MyUserPrincipal implements UserDetails, Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private User user;
+	public User user;
 	
 	public MyUserPrincipal(User user) {
 		this.user = user;

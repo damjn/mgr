@@ -2,7 +2,10 @@ package com.mgr2.controller;
 
 import java.util.List;
 
+import com.mgr2.configuration.MyUserPrincipal;
+import com.mgr2.repository.ContentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,11 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mgr2.dto.ContentDTO;
-import com.mgr2.model.Training;
-import com.mgr2.repository.ContentRepository;
-import com.mgr2.repository.TrainingRepository;
 import com.mgr2.service.ContentService;
 import com.mgr2.storage.StorageService;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ContentController {
@@ -44,11 +45,21 @@ public class ContentController {
 	}
 
 	@RequestMapping(value = "/file", method = RequestMethod.POST)
-	public @ResponseBody String addFile(@RequestParam("file") MultipartFile file,
-			@RequestParam("name") String trainingName) {
-		System.out.println("nazwa pliku: " + file.getOriginalFilename());
-		System.out.println("nazwa kursu: " + trainingName);
-		return storageService.store(file, trainingName);
+	public ModelAndView addFile(@RequestParam("file") MultipartFile file,
+			@RequestParam("name") String trainingName, @RequestParam("description") String description,
+										@RequestParam("orderNr") int orderNr,@RequestParam("trainingId") String trainingId){
+	ContentDTO contentDTO = new ContentDTO();
+	contentDTO.setDescription(description);
+	contentDTO.setPath(storageService.store(file, description));
+	contentDTO.setOrder_nr(orderNr);
+	contentDTO.setTraining_id(Integer.parseInt(trainingId));
+	contentService.saveContent(contentDTO);
+		MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		ModelAndView model = new ModelAndView();
+		model.addObject("user", user);
+		model.setViewName("loggedIndex");
+		return model;
+
 	}
 
 	@RequestMapping(value = "/content/{id}", method = RequestMethod.DELETE)

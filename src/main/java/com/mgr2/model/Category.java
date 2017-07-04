@@ -5,7 +5,7 @@ public enum Category {
 	GRAPHICS,
 	BUSINESS,
 	HEALTH,
-	FASION,
+	FASHION,
 	SPORT,
 	OTHER
 };

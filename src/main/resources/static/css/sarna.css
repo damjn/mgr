@@ -57,12 +57,16 @@ ul.main-menu li.right p{
     }
 }
 
-label {
+label .special {
     display: block;
   
     padding: 20px 30px;
     text-decoration: none;
 
+}
+
+label {
+    display:block;
 }
 
 ul.small-menu {
@@ -259,5 +263,17 @@ div.well{
         }
         
         .curseButton{
-            margin: 0px 10px;
+            margin: 10px 10px;
+        }
+
+        .courseLink{
+            color:red;
+            text-decoration: none;
+            font-size:15px;
+            font-weight: bold;
+        }
+
+        .curseDetailsInfo{
+            display:block;
+
         }

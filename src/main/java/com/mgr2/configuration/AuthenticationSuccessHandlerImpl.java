@@ -27,8 +27,8 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         //do what you want with 
     	MyUserPrincipal user = (MyUserPrincipal) authentication.getPrincipal();
-        String responseMsg = userTaskService.handle24hLoginTask(user.getId());
-        System.out.println("suuuuukces " + responseMsg);
+     //   String responseMsg = userTaskService.handle24hLoginTask(user.getId());
+     //   System.out.println("suuuuukces " + responseMsg);
         redirectStrategy.sendRedirect(request, response, "/home");
     }
 }

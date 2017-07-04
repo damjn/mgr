@@ -1,9 +1,11 @@
 package com.mgr2.controller;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,7 +71,7 @@ public class TrainingController {
        return trainingService.saveTraining(training, user_id);
     }
 	
-	@RequestMapping(value = "/course",method = RequestMethod.PUT)
+	@RequestMapping(value = "/course",method = RequestMethod.PUT,produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public @ResponseBody String editCourse (@RequestBody TrainingDTO training){
        return trainingService.updateTraining(training);
     }
@@ -80,5 +82,13 @@ public class TrainingController {
 		trainingRepository.delete(courseId);
 		return "CONTENT DELETED";
 	}
+
+    @RequestMapping(value = "/course/categories", method = RequestMethod.GET)
+    public @ResponseBody List<String> getCategories() {
+       return Stream.of(Category.values())
+                .map(Category::name)
+                .collect(Collectors.toList());
+
+    }
 
 }
