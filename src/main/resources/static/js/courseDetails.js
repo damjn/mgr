@@ -9,6 +9,7 @@ function loadCourseData(id){
                 $('#coursePrice').empty().append(data.price);
                 $('#courseDesciption').empty().append(data.description);
                 $('#courseNameTwo').empty().append(data.name);
+                $('#traningId123').empty().append(data.id);
 
             $('#courseContent').append("<ol id='courseDataList'></ol>")
             if(0 < data.contentList.length) {
@@ -21,4 +22,29 @@ function loadCourseData(id){
             }
         }
     });
+}
+
+
+
+function buyTraining(trainingId,userId){
+
+
+    var buyTraining = {
+        "training_id": trainingId,
+        "user_id": userId,
+    }
+    $.ajax({
+        url: '/buyTraining',
+        type: "POST",
+        data: JSON.stringify(buyTraining),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        error: function (xhr, ajaxOptions, thrownError) {
+            $('#alertAddToCourse').show();
+
+        }
+    })
+    console.log(course);
+
+
 }

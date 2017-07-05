@@ -25,12 +25,25 @@
 
 <ul class="main-menu">
     <li><a class="active" href="#home" id="mainLogo"><img width="151" height="38" src="/images/logo.jpg"/></a></li>
-    
+
     <li><input type="text" aria-label="Szukaj kursów: " placeholder="Szukaj Kursów..." id="findCourse">
         <button type="button" class="btn btn-default" id="courseLookupButton">Szukaj</button>
     </li>
-  
-    <li class="right"><a href="login.html" id="login">Logowanie</a></li>
+
+    <li class="right"><a th:if="${user == null}" href="login.html" id="login">Logowanie</a>
+
+        <form th:if="${user != null}" style="float: right;" th:action="@{/logout}" method="get">
+            <button class="btn btn-default curseButton" name="registration"
+                    type="Submit">Logout
+            </button>
+        </form>
+        <a  th:if="${user != null}" href="/index_l"  style="float: right;margin:10px; padding:10px;" class="btn btn-default curseButton"> My account </a>
+        <p style="float: right;" th:if="${user != null}" th:text="${user.user.getName() + ' ' + user.user.getLastName() +', Points on your account: '+user.user.getPoints() }"></p>
+
+
+
+
+    </li>
 </ul>
 <em></em>
 
@@ -45,7 +58,13 @@
 </ul>
 
 <ul class="nav nav-pills" id="submenu2">
-    
+    <li><a onclick="getCoursesList('PROGRAMMING', false);"> Programming</a></li>
+    <li><a onclick="getCoursesList('GRAPHICS', false);"> Graphics</a></li>
+    <li><a onclick="getCoursesList('BUSINESS', false);"> Business</a></li>
+    <li><a onclick="getCoursesList('HEALTH', false);"> Health</a></li>
+    <li><a onclick="getCoursesList('FASHION', false);"> Fashion</a></li>
+    <li><a onclick="getCoursesList('SPORT', false);"> Sport</a></li>
+    <li><a onclick="getCoursesList('OTHER', false);"> Other</a></li>
 </ul>
 
 

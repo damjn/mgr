@@ -63,6 +63,12 @@
 					<b>Zaktualizowane dane kursu.</b>
 				</span>
     </div>
+    <div class="alert alert-success" style="display:none; margin:20px 10px;" id="alertAddToCourse">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <span id="elos">
+					<b>You just bought the access for this course! Contratulations</b>
+				</span>
+    </div>
 </ul>
 
 
@@ -90,24 +96,18 @@
 </style>
 
 
-<div class="col-md-3">
+<div class="col-md-6" style="    background-color: pink;border-radius: 25px;margin: 30px;padding: 20px;">
+    <span id="traningId123" style="visibility:hidden;"></span>
+    <span id="userId"  style="visibility:hidden;" th:text="${user.user.getId()}"></span>
     <label for="courseName"> Nazwa kursu: </label>
     <p id="courseName" class="main-course-info" > Angular js </p>
     <label for="coursePrice"> Cena kursu: </label>
     <p id="coursePrice" class="main-course-info"> 23.5 zl</p>
     <label for="courseDesciption" > Opis kursu: </label>
     <p id="courseDesciption" class="main-course-info" > Tutaj bedzie pierdolenie w bambus </p>
-
+    <button class="btn btn-default" onclick="buyTraining($('#traningId123').html(), $('#userId').html());">Buy This Training! </button>
 </div>
 
-
-<div class="col-md-3">
-    <label for="courseDesciption" > Materialy dostepne w kursie: <span id="courseNameTwo"></span> </label>
-     <p id="courseContentaxdas"> </p>
-    <p id="courseContent"> </p>
-
-
-</div>
 
 
 
