@@ -29,6 +29,7 @@ public class TrainingDTOConverter {
 		tDTO.setDescription(training.getDescription());
 		tDTO.setContentList(contentDTOConverter.convertSetOfModelsToDTOList(training.getContent()));
 		tDTO.setPrice(training.getPrice());
+		tDTO.setPoints_price(training.getPoints_price());
 		tDTO.setCategory(training.getCategory());
 		tDTO.setAverageRate(training.getAverageRate());
 		return tDTO;
@@ -41,6 +42,7 @@ public class TrainingDTOConverter {
 		t.setName(tDTO.getName());
 		t.setDescription(tDTO.getDescription());
 		// t.setContent(); chyba nie potrzebne
+		t.setPoints_price(tDTO.getPoints_price());
 		t.setPrice(tDTO.getPrice());
 		t.setCategory(tDTO.getCategory());
 		t.setAverageRate(tDTO.getAverageRate());
@@ -54,6 +56,7 @@ public class TrainingDTOConverter {
 		t.setDescription(tDTO.getDescription());
 		// t.setContent(); chyba nie potrzebne
 		t.setPrice(tDTO.getPrice());
+		t.setPoints_price(tDTO.getPoints_price());
 		t.setCategory(tDTO.getCategory());
 		t.setAverageRate(tDTO.getAverageRate());
 		return t;

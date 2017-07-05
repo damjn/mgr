@@ -47,7 +47,10 @@ public class FileSystemStorageService implements StorageService {
 		} catch (IOException e) {
 			throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
 		}
-		return filePath.toString();
+		
+		String pathToStore = "content\\" + trainingName + "\\" + file.getOriginalFilename(); 
+		System.out.println(pathToStore);
+		return pathToStore;
 	}
 
 	@Override

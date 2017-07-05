@@ -9,52 +9,54 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mgr2.configuration.MyUserPrincipal;
 import com.mgr2.model.User;
 import com.mgr2.service.UserService;
-
+import com.mgr2.service.UserTaskService;
 
 @Controller
 public class LoginController {
-	
+
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
-	public ModelAndView login(){
+	@Autowired
+	private UserTaskService userTaskService;
+
+	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
+	public ModelAndView login() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
-	
-	@RequestMapping(value={"/login2"}, method = RequestMethod.GET)
-	public ModelAndView login2(){
+
+	@RequestMapping(value = { "/login2" }, method = RequestMethod.GET)
+	public ModelAndView login2() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login2");
 		return modelAndView;
 	}
-	
-	
-	
-	@RequestMapping(value="/registration", method = RequestMethod.GET)
-	public ModelAndView registration(){
+
+	@RequestMapping(value = "/registration", method = RequestMethod.GET)
+	public ModelAndView registration() {
 		ModelAndView modelAndView = new ModelAndView();
 		User user = new User();
 		modelAndView.addObject("user", user);
 		modelAndView.setViewName("registration");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult,
+			@RequestParam(value = "token", required = false) String token) {
 		ModelAndView modelAndView = new ModelAndView();
 		User userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
-			bindingResult
-					.rejectValue("email", "error.user",
-							"There is already a user registered with the email provided");
+			bindingResult.rejectValue("email", "error.user",
+					"There is already a user registered with the email provided");
 		}
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("registration");
@@ -63,34 +65,39 @@ public class LoginController {
 			modelAndView.addObject("successMessage", "User has been registered successfully");
 			modelAndView.addObject("user", new User());
 			modelAndView.setViewName("registration");
-			
+			System.out.println("token: " + token);
+			if (token != null) {
+				userTaskService.handleRecomendationLink(token);
+			}
+
 		}
 		return modelAndView;
 	}
-	
-	@RequestMapping(value="/admin/admin_home", method = RequestMethod.GET)
-	public ModelAndView admin_home(){
+
+	@RequestMapping(value = "/admin/admin_home", method = RequestMethod.GET)
+	public ModelAndView admin_home() {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		MyUserPrincipal p = (MyUserPrincipal) auth.getPrincipal();
 		System.out.println("id Usera: " + p.getId());
 		User user = userService.findUserByEmail(auth.getName());
-		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
+		modelAndView.addObject("userName",
+				"Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+		modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
 		modelAndView.setViewName("admin/admin_home");
 		return modelAndView;
 	}
-	
-	@RequestMapping(value="/home", method = RequestMethod.GET)
-	public ModelAndView home(){
+
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public ModelAndView home() {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
-		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-		modelAndView.addObject("welcomeMessage","Home content");
+		modelAndView.addObject("userName",
+				"Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+		modelAndView.addObject("welcomeMessage", "Home content");
 		modelAndView.setViewName("home");
 		return modelAndView;
 	}
-	
 
 }

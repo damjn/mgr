@@ -1,5 +1,8 @@
 package com.mgr2.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,9 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mgr2.configuration.MyUserPrincipal;
+import com.mgr2.dto.ContentDTO;
+import com.mgr2.service.ContentService;
 
 @Controller
 public class ApplicationController {
+	
+	@Autowired
+	ContentService contentService;
 	
 	@RequestMapping(value = "/trainer_page", method = RequestMethod.GET)
 	public ModelAndView trainerPage() {
@@ -24,6 +32,8 @@ public class ApplicationController {
 	@RequestMapping(value = "/video", method = RequestMethod.GET)
 	public ModelAndView videoPage() {
 		ModelAndView model = new ModelAndView();
+		List<ContentDTO> courseContent = contentService.getCourseContent(1);
+		model.addObject("courses",courseContent);
 		model.setViewName("video");
 		return model;
 	}

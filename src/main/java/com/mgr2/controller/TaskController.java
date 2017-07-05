@@ -51,6 +51,11 @@ public class TaskController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/getRecomendationLink",method = RequestMethod.GET)
+    public @ResponseBody String getRecomendationLink (){
+       return userTaskService.getRecomendationLink();
+    }
+	
 	
 
 }

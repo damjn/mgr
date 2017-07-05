@@ -1,14 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
 </head>
 <body>
 <video width="320" height="240" controls>
-  <source src="content\test2\mov_bbb.mp4" type="video/mp4">
+  <source id="video" iter="0" src="content\test\mov_bbb.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
 <img src="images/beer.jpg" alt="Smiley face" height="42" width="42">
+<span th:text="${courses[0].path}"></span>
+<button onclick="nextVideo()">Next video</button>
+<button onclick="addVideo()">add video</button>
 </body>
+
+<script>
+function nextVideo() {
+	$('#video').attr('src', 'content\\test\\small.mp4');
+	//var iter = $('#video').attr('iter');
+	//iter = Number(iter) +1;
+	//console.log("iterator: " + iter);
+	//$('#video').attr('iter', iter);
+	//var src = '${courses['+iter+'].path}'
+	//$('#video').attr('th:src', src);
+}
+
+function addVideo(){
+	var video = "<video width='320' height='240' controls> <source id='video' iter='0' src='content\\test\\small.mp4' type='video/mp4'></video>";
+	$("body").append(video);  
+}
+
+</script>
 </html>

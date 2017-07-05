@@ -18,6 +18,7 @@ public class TrainingDTO {
 	private String description;
 	private List<ContentDTO> contentList;
 	private BigDecimal price;
+	private int points_price;
 	// private int accepted; // dodac lub nie
 	private Category category;
 	private BigDecimal averageRate;
@@ -60,6 +61,12 @@ public class TrainingDTO {
 	}
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+	public int getPoints_price() {
+		return points_price;
+	}
+	public void setPoints_price(int points_price) {
+		this.points_price = points_price;
 	}
 	public Category getCategory() {
 		return category;

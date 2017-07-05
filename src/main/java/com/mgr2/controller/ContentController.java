@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.mgr2.configuration.MyUserPrincipal;
 import com.mgr2.repository.ContentRepository;
+import com.mgr2.repository.TrainingRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,9 @@ public class ContentController {
 
 	@Autowired
 	ContentRepository contentRepository;
+	
+	@Autowired
+	TrainingRepository trainingRepository;
 
 	@RequestMapping(value = "/content", method = RequestMethod.POST)
 	public @ResponseBody String addContent(@RequestBody ContentDTO contentDTO) {
@@ -45,15 +50,18 @@ public class ContentController {
 	}
 
 	@RequestMapping(value = "/file", method = RequestMethod.POST)
-	public ModelAndView addFile(@RequestParam("file") MultipartFile file,
-			@RequestParam("name") String trainingName, @RequestParam("description") String description,
-										@RequestParam("orderNr") int orderNr,@RequestParam("trainingId") String trainingId){
-	ContentDTO contentDTO = new ContentDTO();
-	contentDTO.setDescription(description);
-	contentDTO.setPath(storageService.store(file, description));
-	contentDTO.setOrder_nr(orderNr);
-	contentDTO.setTraining_id(Integer.parseInt(trainingId));
-	contentService.saveContent(contentDTO);
+	public ModelAndView addFile(@RequestParam("file") MultipartFile file, 
+			@RequestParam("description") String description, @RequestParam("orderNr") int orderNr,
+			@RequestParam("trainingId") String trainingId) {
+		ContentDTO contentDTO = new ContentDTO();
+		contentDTO.setDescription(description);
+		String trainingName = trainingRepository.findTrainingNameById(Integer.parseInt(trainingId));
+		String path = storageService.store(file, trainingName);
+		contentDTO.setPath(path);
+		contentDTO.setOrder_nr(orderNr);
+		contentDTO.setTraining_id(Integer.parseInt(trainingId));
+		contentService.saveContent(contentDTO);
+		//storageService.store(file, trainingName);
 		MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		ModelAndView model = new ModelAndView();
 		model.addObject("user", user);
@@ -67,16 +75,15 @@ public class ContentController {
 		contentService.deleteContent(contentId);
 		return "CONTENT DELETED";
 	}
-	
+
 	@RequestMapping(value = "/training_content/{id}", method = RequestMethod.GET)
 	public @ResponseBody List<ContentDTO> getTrainingContent(@PathVariable("id") int trainingId) {
 		return contentService.getCourseContent(trainingId);
 	}
-	
+
 	@RequestMapping(value = "/file/{id}", method = RequestMethod.GET)
 	public @ResponseBody MultipartFile getFile(@PathVariable("id") int content_id) {
 		return contentService.getFile(content_id);
 	}
-	
 
 }

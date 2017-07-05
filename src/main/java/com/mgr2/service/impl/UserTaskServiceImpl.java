@@ -20,20 +20,20 @@ import com.mgr2.repository.UserTaskRepository;
 import com.mgr2.service.UserTaskService;
 
 @Service("userTaskServiceImpl")
-public class UserTaskServiceImpl implements UserTaskService{
-	
+public class UserTaskServiceImpl implements UserTaskService {
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	TaskRepository taskRepository;
-	
+
 	@Autowired
 	UserTaskRepository userTaskRepository;
-	
-//	@Autowired
-//	private JavaMailSender mailSender;
-	
+
+	@Autowired
+	private JavaMailSender mailSender;
+
 	@Override
 	public String markUserTaskDone(UserTaskDTO utDTO) {
 		UserTask ut = getUserTaskByUserIdAndTaskName(utDTO.getTaskname(), utDTO.getUser_id());
@@ -61,8 +61,8 @@ public class UserTaskServiceImpl implements UserTaskService{
 		id.setTask(task);
 		id.setUser(user);
 		UserTask ut = userTaskRepository.findOne(id);
-		if(ut.getDone()==0){
-			user.setPoints(user.getPoints()+task.getPoints());
+		if (ut.getDone() == 0) {
+			user.setPoints(user.getPoints() + task.getPoints());
 			ut.setDone(1);
 			userRepository.save(user);
 			userTaskRepository.save(ut);
@@ -75,8 +75,8 @@ public class UserTaskServiceImpl implements UserTaskService{
 	public String handleEmailConfirmationTask(String token) {
 		UserTask ut = userTaskRepository.findByToken(token);
 		User user = ut.getUser(); // mozliwe ze nie zadziala
-		if(ut.getDone()==0){
-			user.setPoints(user.getPoints()+ut.getTask().getPoints());
+		if (ut.getDone() == 0) {
+			user.setPoints(user.getPoints() + ut.getTask().getPoints());
 			ut.setDone(1);
 			userRepository.save(user);
 			userTaskRepository.save(ut);
@@ -87,8 +87,13 @@ public class UserTaskServiceImpl implements UserTaskService{
 
 	@Override
 	public String sendEmailToConfirmUserEmail() {
-		MyUserPrincipal userPrincipal = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userRepository.findById(userPrincipal.getId()); // do zmiany, dodac get user do MyPrincipalUser
+		// MyUserPrincipal userPrincipal = (MyUserPrincipal)
+		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userRepository.findById(1);// HARDCODED USER WITH ID 1
+												// (userPrincipal.getId()); //
+												// do
+												// zmiany, dodac get user do
+												// MyPrincipalUser
 		Task task = taskRepository.findByName("EmailConfirm");
 		UserTaskId id = new UserTaskId();
 		id.setTask(task);
@@ -96,20 +101,44 @@ public class UserTaskServiceImpl implements UserTaskService{
 		UserTask ut = userTaskRepository.findOne(id);
 		String token = ut.getToken();
 		String recipientAddress = user.getEmail();
-        String subject = "Registration Confirmation";
-        String confirmationUrl 
-          = "/emailConfirm?token=" + token;
-        String message = "Click link to confirm email";
-         
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(recipientAddress);
-        email.setSubject(subject);
-        email.setText(message + " rn" + "http://localhost:8080" + confirmationUrl);
-       // mailSender.send(email);
-		
+		String subject = "Email Confirmation";
+		String confirmationUrl = "/emailConfirm?token=" + token;
+		String message = "Click link to confirm email";
+
+		SimpleMailMessage email = new SimpleMailMessage();
+		email.setTo(recipientAddress);
+		email.setSubject(subject);
+		email.setText(message + " " + "http://localhost:8080" + confirmationUrl);
+		mailSender.send(email);
+
 		return "Mail was sent"; // dodac przypadek ze task jest juz zrobiony
 	}
-	
-	
+
+	@Override
+	public String handleRecomendationLink(String token) {
+		UserTask ut = userTaskRepository.findByToken(token);
+		User user = ut.getUser(); // mozliwe ze nie zadziala
+		user.setPoints(user.getPoints() + ut.getTask().getPoints());
+		userRepository.save(user);
+		return "RegistrationRecomendation done";
+	}
+
+	@Override
+	public String getRecomendationLink() {
+		// MyUserPrincipal userPrincipal = (MyUserPrincipal)
+		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userRepository.findById(1);// HARDCODED USER WITH ID 1
+												// (userPrincipal.getId()); //
+												// do
+												// zmiany, dodac get user do
+												// MyPrincipalUser
+		Task task = taskRepository.findByName("RecomendationLink");
+		UserTaskId id = new UserTaskId();
+		id.setTask(task);
+		id.setUser(user);
+		UserTask ut = userTaskRepository.findOne(id);
+		String token = ut.getToken();
+		return "http://localhost:8080/registration?token="+token;
+	}
 
 }

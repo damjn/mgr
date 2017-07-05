@@ -46,6 +46,9 @@ public class Training implements Serializable {
 	@Digits(integer = 5, fraction = 2)
 	@Column(name = "price")
 	private BigDecimal price;
+	
+	@Column(name="points_price")
+	private int points_price;
 
 	@Column(name = "accepted")
 	private int accepted;
@@ -72,6 +75,14 @@ public class Training implements Serializable {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+	
+	public int getPoints_price() {
+		return points_price;
+	}
+
+	public void setPoints_price(int points_price) {
+		this.points_price = points_price;
 	}
 
 	public int getAccepted() {
