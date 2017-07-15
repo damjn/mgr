@@ -85,5 +85,10 @@ public class ContentController {
 	public @ResponseBody MultipartFile getFile(@PathVariable("id") int content_id) {
 		return contentService.getFile(content_id);
 	}
+	
+	@RequestMapping(value = "/content/{id}/{order}", method = RequestMethod.GET)
+	public @ResponseBody ContentDTO getSpecificContent (@PathVariable("id") int training_id, @PathVariable("order") int ordernr) {
+		return contentService.getSpecificContent(training_id, ordernr);
+	}
 
 }

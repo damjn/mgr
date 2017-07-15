@@ -6,6 +6,8 @@ import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,29 +44,33 @@ public class TrainingController {
         return trainingDTOConverter.convertListOfModelsToDTOList(trainingRepository.findAll());
     }
 	
+	@RequestMapping(value = "/course/{id}",method = RequestMethod.GET)
+	public @ResponseBody TrainingDTO getCourse(@PathVariable("id") int courseId){
+		return trainingService.findById(courseId);
+	}
+	
+	@RequestMapping(value = "/t_courses",method = RequestMethod.GET)
+	public @ResponseBody
+	List<TrainingDTO> getLoggedTrainerCourses(){
+		return trainingService.getCoursesByLoggedTrainerId();
+	}
+	
 	@RequestMapping(value = "/courses/{category}",method = RequestMethod.GET)
     public @ResponseBody
     List<TrainingDTO> getCategoryCourses(@PathVariable String category){
         return trainingDTOConverter.convertListOfModelsToDTOList(trainingRepository.findByCategory(Category.valueOf(category)));
     }
 	
-	@RequestMapping(value = "/t_courses",method = RequestMethod.GET)
-    public @ResponseBody
-    List<TrainingDTO> getLoggedTrainerCourses(){
-        return trainingService.getCoursesByLoggedTrainerId();
-    }
 	
-	@RequestMapping(value = "/u_courses",method = RequestMethod.POST)
+	@RequestMapping(value = "/u_courses",method = RequestMethod.GET)
     public @ResponseBody
-    List<TrainingDTO> getUserCourses(@RequestBody UserDTO uDTO){
+    List<TrainingDTO> getUserCourses(){
         //return trainingDTOConverter.convertListOfModelsToDTOList(trainingRepository.findByUserEmail(email));
-		return trainingService.getUserCourses(uDTO.getEmail());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName(); //get logged in username
+		return trainingService.getUserCourses(name);
     }
 	
-	@RequestMapping(value = "/course/{id}",method = RequestMethod.GET)
-    public @ResponseBody TrainingDTO getCourse(@PathVariable("id") int courseId){
-        return trainingService.findById(courseId);
-    }
 	
 	@RequestMapping(value = "/course",method = RequestMethod.POST)
     public @ResponseBody String addCourse (@RequestBody TrainingDTO training, @RequestParam("user_id") int user_id){

@@ -14,4 +14,8 @@ public interface ContentService {
 	public List<ContentDTO> getCourseContent(int courseId);
 
 	public MultipartFile getFile(int content_id);
+
+	public ContentDTO getFirstContent(String training_name);
+
+	public ContentDTO getSpecificContent(int training_id, int ordernr);
 }

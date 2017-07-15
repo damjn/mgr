@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mgr2.configuration.MyUserPrincipal;
@@ -21,12 +22,33 @@ public class ApplicationController {
 	@Autowired
 	ContentService contentService;
 	
+	@RequestMapping(value = "/index_l", method = RequestMethod.GET)
+	public ModelAndView indexLoggedPage() {
+		ModelAndView model = new ModelAndView();
+		MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		model.addObject("user", user);
+		model.setViewName("loggedIndex");
+		return model;
+	}
+	
 	@RequestMapping(value = "/video", method = RequestMethod.GET)
+	public ModelAndView videoPage(@RequestParam("name") String training_name) {
+		ContentDTO first = contentService.getFirstContent(training_name);
+		ModelAndView model = new ModelAndView();
+		model.addObject("t_name", training_name);
+		model.addObject("first", first);
+		//List<ContentDTO> courseContent = contentService.getCourseContent(1);
+		//model.addObject("courses",courseContent);
+		model.setViewName("video");
+		return model;
+	}
+	
+	@RequestMapping(value = "/video2", method = RequestMethod.GET)
 	public ModelAndView videoPage() {
 		ModelAndView model = new ModelAndView();
-		List<ContentDTO> courseContent = contentService.getCourseContent(1);
-		model.addObject("courses",courseContent);
-		model.setViewName("video");
+		//List<ContentDTO> courseContent = contentService.getCourseContent(1);
+		//model.addObject("courses",courseContent);
+		model.setViewName("video2");
 		return model;
 	}
 
@@ -55,14 +77,6 @@ public class ApplicationController {
         return model;
     }
 
-    @RequestMapping(value = "/index_l", method = RequestMethod.GET)
-    public ModelAndView indexLoggedPage() {
-        ModelAndView model = new ModelAndView();
-        MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addObject("user", user);
-        model.setViewName("loggedIndex");
-        return model;
-    }
 
     @RequestMapping(value = "/course", method = RequestMethod.GET)
     public ModelAndView coursePage() {

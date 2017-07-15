@@ -24,8 +24,8 @@ public class Content implements Serializable {
 	@Column(name="path")
 	private String path;
 	
-	@Column(name="order_nr")
-	private int order_nr;
+	@Column(name="orderNr")
+	private int ordernr;
 	
 	@ManyToOne
 	@JoinColumn(name="training_id")
@@ -51,11 +51,11 @@ public class Content implements Serializable {
 	}
 
 	public int getOrder_nr() {
-		return order_nr;
+		return ordernr;
 	}
 
 	public void setOrder_nr(int order_nr) {
-		this.order_nr = order_nr;
+		this.ordernr = order_nr;
 	}
 
 	public static long getSerialversionuid() {

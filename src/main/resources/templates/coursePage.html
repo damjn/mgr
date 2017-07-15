@@ -27,8 +27,8 @@
 <ul class="main-menu">
     <li><a class="active" href="#home" id="mainLogo"><img width="151" height="38" src="/images/logo.jpg"/></a></li>
 
-    <li><input type="text" aria-label="Szukaj kursów: " placeholder="Szukaj Kursów..." id="findCourse">
-        <button type="button" class="btn btn-default" id="courseLookupButton">Szukaj</button>
+    <li><input type="text" aria-label="Search: " placeholder="Search..." id="findCourse">
+        <button type="button" class="btn btn-default" id="courseLookupButton">Search</button>
     </li>
 
     <li class="right"><form id="logoutForm" action="/logout"></form>
@@ -37,7 +37,7 @@
             <button  class="btn btn-default curseButton"  name="registration"
                      type="Submit">Logout</button>
         </form>
-    <li class="right"><p id="loggedUser">Zalogowano jako: <span th:text="${user.user.getName() + ' ' + user.user.getLastName() }"></span> </p></li>
+    <li class="right"><p id="loggedUser">Logged as: <span th:text="${user.user.getName() + ' ' + user.user.getLastName() }"></span> </p></li>
 </ul>
 <em></em>
 
@@ -46,21 +46,20 @@
 </ul>
 
 <ul class="nav nav-pills main-menu-items">
-    <li><a href="#home" class="main-menu-items">Nasza Misja</a></li>
-    <li><a href="#home" class="main-menu-items">O nas </a></li>
-    <li><a href="#home" class="main-menu-items">Kontakt</a></li>
-    <li><a href="#home" class="main-menu-items">Kursy</a></li>
+    <li><a href="#home" class="main-menu-items">About </a></li>
+    <li><a href="#home" class="main-menu-items">Contact</a></li>
+    <li><a href="#home" class="main-menu-items">Courses</a></li>
 </ul>
 
 <ul class="nav nav-pills" id="submenu2">
     <div class="alert alert-success" id="alertAdd" hidden="hidden">
         <button type="button" class="close" data-hide="alert">&times;</button>
-        Dodano nowy kurs
+        Course added
     </div>
     <div class="alert alert-success" style="display:none; margin:20px 10px;" id="alertUpdate">
         <button class="close" data-dismiss="alert">&times;</button>
         <span id="success">
-					<b>Zaktualizowane dane kursu.</b>
+					<b>Course updated.</b>
 				</span>
     </div>
     <div class="alert alert-success" style="display:none; margin:20px 10px;" id="alertAddToCourse">
@@ -99,12 +98,12 @@
 <div class="col-md-6" style="    background-color: pink;border-radius: 25px;margin: 30px;padding: 20px;">
     <span id="traningId123" style="visibility:hidden;"></span>
     <span id="userId"  style="visibility:hidden;" th:text="${user.user.getId()}"></span>
-    <label for="courseName"> Nazwa kursu: </label>
+    <label for="courseName"> Name:  </label>
     <p id="courseName" class="main-course-info" > Angular js </p>
-    <label for="coursePrice"> Cena kursu: </label>
+    <label for="coursePrice"> Price: </label>
     <p id="coursePrice" class="main-course-info"> 23.5 zl</p>
-    <label for="courseDesciption" > Opis kursu: </label>
-    <p id="courseDesciption" class="main-course-info" > Tutaj bedzie pierdolenie w bambus </p>
+    <label for="courseDesciption" > Description: </label>
+    <p id="courseDesciption" class="main-course-info" > Tutaj bedzie  </p>
     <button class="btn btn-default" onclick="buyTraining($('#traningId123').html(), $('#userId').html());">Buy This Training! </button>
 </div>
 

@@ -14,11 +14,11 @@ function loadCourseData(id){
             $('#courseContent').append("<ol id='courseDataList'></ol>")
             if(0 < data.contentList.length) {
                 for (var i = 0; i < data.contentList.length; i++) {
-                    $('#courseDataList').append("<li><p> <label>Opis:</label><span class='courseItemDescription'>" +data.contentList[i].description + "</span><br/><label>Zrodlo:</label><a href='"+ data.contentList[i].path +"' class='courseItemPath'>Przejdz do materialu</a></p></li>");
+                    $('#courseDataList').append("<li><p> <label>Description: </label><span class='courseItemDescription'>" +data.contentList[i].description + "</span><br/><label>Path: </label><a href='"+ data.contentList[i].path +"' class='courseItemPath'>Open content</a></p></li>");
                 }
             }
             else{
-                $('#courseContentaxdas').append("<p> Na ta chwile brak materialow dla kursu!</p>")
+                $('#courseContentaxdas').append("<p> This course has no content yet!</p>")
             }
         }
     });

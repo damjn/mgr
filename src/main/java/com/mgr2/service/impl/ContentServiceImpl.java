@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mgr2.dto.ContentDTO;
 import com.mgr2.dto.convertion.ContentDTOConverter;
 import com.mgr2.model.Content;
+import com.mgr2.model.Training;
 import com.mgr2.repository.ContentRepository;
 import com.mgr2.repository.TrainingRepository;
 import com.mgr2.service.ContentService;
@@ -62,6 +63,20 @@ public class ContentServiceImpl implements ContentService {
 	public MultipartFile getFile(int content_id) {
 		String path = contentRepository.findById(content_id).getPath();
 		return storageService.loadAsMultipartFile(path);
+	}
+
+	@Override
+	public ContentDTO getFirstContent(String training_name) {
+		Training t = trainingRepository.findByName(training_name);
+		Content c = contentRepository.findByTrainingIdAndOrdernr(t.getId(), 1);
+		System.out.println("test metody: " + c.getPath());
+		return contentDTOConverter.covertModelToDTO(c);
+	}
+
+	@Override
+	public ContentDTO getSpecificContent(int training_id, int ordernr) {
+		Content c = contentRepository.findByTrainingIdAndOrdernr(training_id, ordernr);
+		return contentDTOConverter.covertModelToDTO(c);
 	}
 	
 	

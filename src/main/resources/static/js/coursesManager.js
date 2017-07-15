@@ -7,11 +7,11 @@ function loadMyCourses() {
         $('#myCurses').empty();
         console.log("load courses")
         if (data.length == 0) {
-            $('#myCurses').append("Nie ma zadnych dostepnych kursow...");
+            $('#myCurses').append("No courses avaliable...");
         }
         else {
             for (var i = 0; i < data.length; i++) {
-                $('#myCurses').append("<div class='curse col-md-8 courseArea'> <a data-toggle='modal' data-id='" + data[i].id + "'  data-target='#modalUpdate' style='float:right;' class='update-Course btn btn-info'>Edit</a><a data-toggle='modal' data-id='" + data[i].id + "'  data-target='#modalAddContent' style='float:right;' class='add-Content btn btn-info'>Dodaj content!</a> <label>Nazwa kursu:</label><h1><a '" + data[i].id + "' class='courseLink'>" + data[i].name + " </a></h1> <br/><label>Opis kursu:</label><span class='attribute-value'>" + data[i].description + " </span><br/> <label>Cena kursu:</label><span class='attribute-value'>" + data[i].price + " zł. </span>  <p id='courseContent" + data[i].id + "'></p></div></div>");
+                $('#myCurses').append("<div class='curse col-md-8 courseArea'> <a data-toggle='modal' data-id='" + data[i].id + "'  data-target='#modalUpdate' style='float:right;' class='update-Course btn btn-info'>Edit</a><a data-toggle='modal' data-id='" + data[i].id + "'  data-target='#modalAddContent' style='float:right;' class='add-Content btn btn-info'>Add content!</a> <label>Name:</label><h1><a '" + data[i].id + "' class='courseLink'>" + data[i].name + " </a></h1> <br/><label>Description:</label><span class='attribute-value'>" + data[i].description + " </span><br/> <label>Price:</label><span class='attribute-value'>" + data[i].price + " zł. </span>  <p id='courseContent" + data[i].id + "'></p></div></div>");
                 loadCourseData(data[i].id);
             }
         }
@@ -185,11 +185,11 @@ function loadCourseData(id) {
             $('#courseContent' + id).append("<ol id='courseDataList" + id + "'></ol>")
             if (0 < data.contentList.length) {
                 for (var i = 0; i < data.contentList.length; i++) {
-                    $('#courseDataList' + id).append("<li><p> <label>Opis:</label><span class='courseItemDescription'>" + data.contentList[i].description + "</span><br/><a data-toggle='modal' data-id='" + data.contentList[i].id + "'  data-target='#deleteContentModal' class='deleteContentModal2 btn btn-info'>Delete Content</a ></p></li>");
+                    $('#courseDataList' + id).append("<li><p> <label>Description:</label><span class='courseItemDescription'>" + data.contentList[i].description + "</span><br/><a data-toggle='modal' data-id='" + data.contentList[i].id + "'  data-target='#deleteContentModal' class='deleteContentModal2 btn btn-info'>Delete Content</a ></p></li>");
                 }
             }
             else {
-                $('#courseContent' + id).append("<p> Na ta chwile brak materialow dla kursu!</p>")
+                $('#courseContent' + id).append("<p> This courses has no content yet!</p>")
             }
         }
     });

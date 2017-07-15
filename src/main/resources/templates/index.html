@@ -27,17 +27,18 @@
     <li><a class="active" href="#home" id="mainLogo"><img width="151" height="38" src="/images/logo.jpg"/></a></li>
 
     <li><input type="text" aria-label="Szukaj kursów: " placeholder="Szukaj Kursów..." id="findCourse">
-        <button type="button" class="btn btn-default" id="courseLookupButton">Szukaj</button>
+        <button type="button" class="btn btn-default" id="courseLookupButton">Search</button>
     </li>
 
-    <li class="right"><a th:if="${user == null}" href="login.html" id="login">Logowanie</a>
+    <li class="right"><a th:if="${user == null}" href="login.html" id="login">Log in</a>
 
         <form th:if="${user != null}" style="float: right;" th:action="@{/logout}" method="get">
             <button class="btn btn-default curseButton" name="registration"
                     type="Submit">Logout
             </button>
         </form>
-        <a  th:if="${user != null}" href="/index_l"  style="float: right;margin:10px; padding:10px;" class="btn btn-default curseButton"> My account </a>
+        <button onclick="getUserCoList()" style="float: right;margin:10px; padding:10px;" class="btn btn-default curseButton">Bought Courses</button>
+        <a  th:if="${user != null}" href="/index_l"  style="float: right;margin:10px; padding:10px;" class="btn btn-default curseButton"> My courses </a>
         <p style="float: right;" th:if="${user != null}" th:text="${user.user.getName() + ' ' + user.user.getLastName() +', Points on your account: '+user.user.getPoints() }"></p>
 
 
@@ -52,9 +53,8 @@
 </ul>
 
 <ul class="nav nav-pills main-menu-items">
-    <li><a href="#home" class="main-menu-items">Nasza Misja</a></li>
-    <li><a href="#home" class="main-menu-items">O nas </a></li>
-    <li><a href="#home" class="main-menu-items">Kontakt</a></li>
+    <li><a href="#home" class="main-menu-items">About </a></li>
+    <li><a href="#home" class="main-menu-items">Contact</a></li>
 </ul>
 
 <ul class="nav nav-pills" id="submenu2">
@@ -68,7 +68,7 @@
 </ul>
 
 
-<p id="curseLabel">Kursy ofererowane obecnie przez <b>learnNow:</b></p>
+<p id="curseLabel">Search for courses <b>learnNow:</b></p>
 
 
 <div class='row' id="pageContent">
