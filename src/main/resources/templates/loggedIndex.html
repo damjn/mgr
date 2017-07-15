@@ -31,21 +31,43 @@
     </li>
 
     <li class="right">
-        <a  th:if="${user != null}" href="/index_l"  style="float: right;margin:10px; padding:10px;" class="btn btn-default curseButton"> My Courses</a>
-        <form id="logoutForm" action="/logout"></form>
+     <!--   <a  th:if="${user != null}" href="/index_l"  style="float: right;margin:10px; padding:10px;" class="btn btn-default curseButton"> My Courses</a> -->
 
-        <form th:action="@{/logout}" method="get">
-            <button class="btn btn-default curseButton" name="registration"
-                    type="Submit">Logout
-            </button>
-        </form>
-    <li class="right"><p id="loggedUser">Logged as, <span
-            th:text="${user.user.getName() + ' ' + user.user.getLastName() +',' }">,</span>
 
+
+
+    <li class="right" style="display: inline;">
+
+    <ul style="" class="loggedInList">
+  <li>  <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" style="    margin: -10px;" type="button" data-toggle="dropdown">
+            <span th:text="${user.user.getName() + ' ' + user.user.getLastName() }"></span>
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="./userData">My profile</a></li>
+            <li><a href="#">My courses</a></li>
+            <li><a href="#">My Tasks</a></li>
+            <li><a href="./index_l">Trainer page</a></li>
+            <li>
+                <form id="logoutForm" action="/logout"></form>
+
+                <form th:action="@{/logout}" method="get">
+                    <button class="btn btn-default curseButton" name="registration"
+                            type="Submit">Logout
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+  </li>
+    <li>
     Points on your account:
-    <span
-            th:text="${user.user.getPoints() }"></span>
-</p></li>
+    <span th:text="${user.user.getPoints() }"></span>
+        </li>
+    </ul>
+</li>
+
+
 </ul>
 <em></em>
 
@@ -53,12 +75,7 @@
 
 </ul>
 
-<ul class="nav nav-pills main-menu-items">
-    
-    <li><a href="#home" class="main-menu-items">About </a></li>
-    <li><a href="#home" class="main-menu-items">Contact</a></li>
-    <li><a href="#home" class="main-menu-items">Courses</a></li>
-</ul>
+
 
 <ul class="nav nav-pills" id="submenu2">
     <div class="alert alert-success" id="alertAdd" hidden="hidden">

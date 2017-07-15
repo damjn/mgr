@@ -39,11 +39,15 @@
         </form>
         <button onclick="getUserCoList()" style="float: right;margin:10px; padding:10px;" class="btn btn-default curseButton">Bought Courses</button>
         <a  th:if="${user != null}" href="/index_l"  style="float: right;margin:10px; padding:10px;" class="btn btn-default curseButton"> My courses </a>
-        <p style="float: right;" th:if="${user != null}" th:text="${user.user.getName() + ' ' + user.user.getLastName() +', Points on your account: '+user.user.getPoints() }"></p>
+        <p style="float: right;" th:if="${user != null}" th:text="${user.user.getName() + ' ' + user.user.getLastName() +', Points on your accounts: '+user.user.getPoints() }"></p>
 
-
-
-
+        <ul class="dropdown-menu">
+            <li class="dropdown-header">Menu</li>
+            <li><a href="./userData">My profile</a></li>
+            <li><a href="#">My courses</a></li>
+            <li><a href="#">My Tasks</a></li>
+            <li><a href="./index_l">Trainer page</a></li>
+        </ul>
     </li>
 </ul>
 <em></em>

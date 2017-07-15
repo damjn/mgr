@@ -97,6 +97,16 @@ public class ApplicationController {
         return model;
     }
 
+
+    @RequestMapping(value = "/userData", method = RequestMethod.GET)
+    public ModelAndView userData() {
+        ModelAndView model = new ModelAndView();
+        MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addObject("user", user);
+        model.setViewName("userData");
+        return model;
+    }
+
 //	@RequestMapping(value = "/trainer_course", method = RequestMethod.GET)
 //	public ModelAndView trainerCourse() {
 //		ModelAndView model = new ModelAndView();
