@@ -55,7 +55,11 @@ function addNewCourse() {
         type: "POST",
         data: JSON.stringify(course),
         contentType: "application/json; charset=utf-8",
-        dataType: "json",
+        //dataType: "json",
+        success: function (data) {
+        	console.log("dziala" + data);
+            $('#alertUpdate').show();
+        },
         error: function (xhr, ajaxOptions, thrownError) {
             $('#alertAdd').show();
             loadMyCourses();
