@@ -1,6 +1,9 @@
 package com.mgr2.service;
 
+import java.util.List;
+
 import com.mgr2.dto.UserTaskDTO;
+import com.mgr2.dto.UserTaskJoinDTO;
 import com.mgr2.model.UserTask;
 
 public interface UserTaskService {
@@ -12,5 +15,6 @@ public interface UserTaskService {
 	String sendEmailToConfirmUserEmail();
 	String handleRecomendationLink(String token);
 	String getRecomendationLink();
+	List<UserTaskJoinDTO> getAllUserTasks();
 
 }

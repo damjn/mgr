@@ -22,6 +22,10 @@ public class TrainingDTO {
 	// private int accepted; // dodac lub nie
 	private Category category;
 	private BigDecimal averageRate;
+	private int userRate;
+	private int loggedUserId; // do ogarniecia czy converterach nie trzeba tego zrobic
+	
+	
 	
 	public int getId() {
 		return id;
@@ -80,6 +84,19 @@ public class TrainingDTO {
 	public void setAverageRate(BigDecimal averageRate) {
 		this.averageRate = averageRate;
 	}
+	public int getUserRate() {
+		return userRate;
+	}
+	public void setUserRate(int userRate) {
+		this.userRate = userRate;
+	}
+	public int getLoggedUserId() {
+		return loggedUserId;
+	}
+	public void setLoggedUserId(int loggedUserId) {
+		this.loggedUserId = loggedUserId;
+	}
+	
 	
 	
 }

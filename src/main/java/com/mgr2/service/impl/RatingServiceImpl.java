@@ -34,18 +34,25 @@ public class RatingServiceImpl implements RatingService{
 	@Override
 	public String updateRate(RateDTO rDTO) {
 		
-		return null;
+		Rating r = ratingRepository.findByTrainingidAndUserid(rDTO.getTrainingid(), rDTO.getUserid());
+		if(r == null){
+			System.out.println("pierwsza ocena");
+			r = ratingDTOConverter.convertDTOtoModel(rDTO);
+		}
+		r.setRate(rDTO.getRate());
+		ratingRepository.save(r);
+		return "RATE SAVED";
 	}
 
 	@Override
 	public RateDTO getUserRate(RateDTO rDTO) {
 		User user = userRepository.findByEmail(rDTO.getEmail());
-		Integer rate = ratingRepository.findRateByUserIdAndTrainingID(user.getId(), rDTO.getTraining_id());
+		Integer rate = ratingRepository.findRateByUserIdAndTrainingID(user.getId(), rDTO.getTrainingid());
 		if(rate == null){
 			rate = 0;
 		}
 		rDTO.setRate(rate);
-		rDTO.setUser_id(user.getId());
+		rDTO.setUserid(user.getId());
 		return rDTO;
 	}
 

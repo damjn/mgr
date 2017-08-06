@@ -1,6 +1,8 @@
 package com.mgr2.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.mgr2.configuration.MyUserPrincipal;
 import com.mgr2.dto.UserTaskDTO;
+import com.mgr2.dto.UserTaskJoinDTO;
 import com.mgr2.model.Task;
 import com.mgr2.model.User;
 import com.mgr2.model.UserTask;
@@ -139,6 +142,34 @@ public class UserTaskServiceImpl implements UserTaskService {
 		UserTask ut = userTaskRepository.findOne(id);
 		String token = ut.getToken();
 		return "http://localhost:8080/registration?token="+token;
+	}
+
+	@Override
+	public List<UserTaskJoinDTO> getAllUserTasks() {
+		MyUserPrincipal userPrincipal = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userRepository.findByEmail(userPrincipal.getUsername());
+		List<Task> tasks = taskRepository.findAll();
+		List<UserTaskJoinDTO> utj = new ArrayList<>();
+		for(Task task : tasks){
+			UserTask ut = getUserTask(user, task);
+			UserTaskJoinDTO utjDTO = new UserTaskJoinDTO();
+			utjDTO.setId(task.getId());
+			utjDTO.setUserId(user.getId());
+			utjDTO.setName(task.getName());
+			utjDTO.setPoints(task.getPoints());
+			utjDTO.setDescription(task.getDescription());
+			utjDTO.setDone(ut.getDone());
+			utjDTO.setToken(ut.getToken());
+			utj.add(utjDTO);
+		}
+		return utj;
+	}
+	
+	private UserTask getUserTask(User user, Task task){
+		UserTaskId id = new UserTaskId();
+		id.setTask(task);
+		id.setUser(user);
+		return userTaskRepository.findOne(id);
 	}
 
 }

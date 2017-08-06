@@ -10,7 +10,8 @@ import com.mgr2.model.Rating;
 @Repository("ratingRepository")
 public interface RatingRepository extends JpaRepository<Rating, Integer> {
 
-	@Query("SELECT r.rate FROM Rating r WHERE r.user_id=:user_id and r.training_id=:training_id")
-	Integer findRateByUserIdAndTrainingID(@Param("user_id") int user_id, @Param("training_id") int training_id);
+	@Query("SELECT r.rate FROM Rating r WHERE r.userid=:userid and r.trainingid=:trainingid")
+	Integer findRateByUserIdAndTrainingID(@Param("userid") int user_id, @Param("trainingid") int training_id);
+	Rating findByTrainingidAndUserid(int trainingid, int userid);
 
 }

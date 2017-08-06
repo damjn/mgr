@@ -13,6 +13,7 @@ import com.mgr2.dto.TrainingDTO;
 import com.mgr2.dto.convertion.TrainingDTOConverter;
 import com.mgr2.model.Training;
 import com.mgr2.model.User;
+import com.mgr2.repository.RatingRepository;
 import com.mgr2.repository.TrainingRepository;
 import com.mgr2.repository.UserRepository;
 import com.mgr2.service.TrainingService;
@@ -28,6 +29,9 @@ public class TrainingServiceImpl implements TrainingService {
 	
 	@Autowired
 	TrainingDTOConverter trainingDTOConverter;
+	
+	@Autowired
+	RatingRepository ratingRepository;
 	
 	@Override
 	public String saveTraining(Training training) { // pozmieniac na DTO
@@ -79,9 +83,19 @@ public class TrainingServiceImpl implements TrainingService {
 	@Override
 	public List<TrainingDTO> getUserCourses(String email) {
 		User user = userRepository.findByEmail(email);
-		System.out.println("na przyklad mail: " + user.getEmail() + "i nazwa: " + user.getName());
+		System.out.println("na przyklad mail: " + user.getEmail() + "i id: " + user.getId());
 		Set<Training> userTrainings = user.getTrainings();
-		return trainingDTOConverter.convertSetOfModelsToDTOList(userTrainings);
+		List<TrainingDTO> DTOList = trainingDTOConverter.convertSetOfModelsToDTOList(userTrainings);
+		for(TrainingDTO tDTO : DTOList){
+			Integer rate = ratingRepository.findRateByUserIdAndTrainingID(user.getId(), tDTO.getId());
+			if(rate == null){
+				tDTO.setUserRate(0);
+			}else{
+				tDTO.setUserRate(rate);
+			}
+			tDTO.setLoggedUserId(user.getId());
+		}
+		return DTOList;
 	}
 
 	@Override

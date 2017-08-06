@@ -1,5 +1,7 @@
 package com.mgr2.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import com.mgr2.configuration.MyUserPrincipal;
 import com.mgr2.dto.TaskDTO;
 import com.mgr2.dto.TrainingDTO;
 import com.mgr2.dto.UserTaskDTO;
+import com.mgr2.dto.UserTaskJoinDTO;
 import com.mgr2.service.TaskService;
 import com.mgr2.service.UserTaskService;
 
@@ -42,7 +45,7 @@ public class TaskController {
     }
 	
 	@RequestMapping(value = "/emailConfirm", method = RequestMethod.GET)
-	public ModelAndView homePage(@RequestParam("token") String token) {
+	public ModelAndView emailConfirm(@RequestParam("token") String token) {
 		userTaskService.handleEmailConfirmationTask(token);
 		ModelAndView model = new ModelAndView();
 		MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -54,6 +57,12 @@ public class TaskController {
 	@RequestMapping(value = "/getRecomendationLink",method = RequestMethod.GET)
     public @ResponseBody String getRecomendationLink (){
        return userTaskService.getRecomendationLink();
+    }
+	
+	@RequestMapping(value = "/getTasks",method = RequestMethod.GET)
+    public @ResponseBody
+    List<UserTaskJoinDTO> getAllCourses(){
+        return userTaskService.getAllUserTasks();
     }
 	
 	

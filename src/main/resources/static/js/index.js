@@ -27,7 +27,7 @@ function getCoursesList(searchWord, comingFromLookup) {
         else {
             var set = new Set();
             for (var i = 0; i < data.length; i++) {
-                $('#pageContent').append("<a href='/courseDetails/"+data[i].id +"'><div class='col-sm-2 col-md-2'><div class='thumbnail '> <img src='/images/sample.jpg' width='200px' height='200px'> <div class='caption'> <h3>" + data[i].name + "</h3><p>" + data[i].description + "</p> </div> </div></div> </div></a> ");
+                $('#pageContent').append("<a href='/courseDetails/"+data[i].id +"'><div class='col-sm-2 col-md-2'><div class='thumbnail '> <img src='/images/sample.jpg' width='200px' height='200px'> <div class='caption'> <h3>" + data[i].name + "</h3><p>" + data[i].description + "</p> <p>" + data[i].averageRate + "</p></div> </div></div> </div></a> ");
                 if (comingFromLookup === false) {
 
                 }

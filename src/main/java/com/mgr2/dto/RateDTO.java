@@ -4,9 +4,9 @@ public class RateDTO {
 	
 	int id;
 	String email;
-	int training_id;
+	int trainingid;
 	int rate;
-	int user_id;
+	int userid;
 	
 	public int getId() {
 		return id;
@@ -20,25 +20,24 @@ public class RateDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getTraining_id() {
-		return training_id;
-	}
-	public void setTraining_id(int training_id) {
-		this.training_id = training_id;
-	}
 	public int getRate() {
 		return rate;
 	}
 	public void setRate(int rate) {
 		this.rate = rate;
 	}
-	public int getUser_id() {
-		return user_id;
+	public int getTrainingid() {
+		return trainingid;
 	}
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setTrainingid(int trainingid) {
+		this.trainingid = trainingid;
 	}
-	
+	public int getUserid() {
+		return userid;
+	}
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
 	
 
 }

@@ -23,10 +23,10 @@ public class Rating implements Serializable {
 	private int rate;
 	
 	@Column
-	private int training_id;
+	private int trainingid;
 	
 	@Column
-	private int user_id;
+	private int userid;
 
 	public int getId() {
 		return id;
@@ -44,20 +44,22 @@ public class Rating implements Serializable {
 		this.rate = rate;
 	}
 
-	public int getTraining_id() {
-		return training_id;
+	public int getTrainingid() {
+		return trainingid;
 	}
 
-	public void setTraining_id(int training_id) {
-		this.training_id = training_id;
+	public void setTrainingid(int trainingid) {
+		this.trainingid = trainingid;
 	}
 
-	public int getUser_id() {
-		return user_id;
+	public int getUserid() {
+		return userid;
 	}
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setUserid(int userid) {
+		this.userid = userid;
 	}
+
+	
 
 }

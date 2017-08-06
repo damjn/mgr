@@ -20,7 +20,8 @@
     <link rel="stylesheet" th:href="@{/css/sarna.css}"/>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/coursesManager.js}"></script>
-    <script th:src="@{/js/userData.js}"></script>
+    <script th:src="@{/js/tasks.js}"></script>
+    <script th:src="@{/js/handlebars-v4.0.10.js}"></script>
 </head>
 <body>
 
@@ -82,58 +83,25 @@
     <li><a href="#home" class="main-menu-items">Courses</a></li>
 </ul>
 
-<ul class="nav nav-pills" id="submenu2">
-    <div class="alert alert-success" id="alertPassChanged" hidden="hidden">
-        <button type="button" class="close" data-hide="alert">&times;</button>
-        Password Changed.
-    </div>
-</ul>
 
-<div class="col-md-8" style="  background-color: plum;border-radius: 25px;margin: 30px;padding: 20px;">
-    <label for="userName"> Name :  </label><br/>
-    <input style="width: 400px;" type="text" id="userName" name="userName" disabled/><br/>
-    <label for="userLastName"> Surname: </label><br/>
-    <input style="width: 400px;" type="text" id="userLastName" name="userLastName" disabled/><br/>
-    <label for="userEmail" > Email: </label><br/>
-    <input style="width: 400px;" type="text" id="userEmail" name="userEmail" disabled/><br/>
-    <label for="userPoints" > UserPoints: </label><br/>
-    <input style="width: 400px;" type="text" id="userPoints" name="userPoints" disabled/><br/>
-    <button data-toggle='modal'  data-target='#modalUpdate' style='float:right;' class='update-Course btn btn-info'>Change password</button>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalUpdate" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="closeMe">&times;</button>
-                <h4 class="modal-title" id="modalTitle">Change password</h4>
-            </div>
-            <div class="modal-body">
-                Provide old Password:
-                <input type="text" style="width:100%;" id="oldPassword"/><br/>
-                Insert new password:
-                <input type="text" style="width:100%;" id="newPassword"/><br/>
-                Insert new password:
-                <input type="text" style="width:100%;" id="newPassword2"/><br/>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="offset3 btn btn-primary btn-round"
-                        onclick="passwordValidation();">Change password!
-                </button>
-            </div>
-        </div>
-    </div>
+<div class="list-group" id="tasks">
+<!-- <button class="btn btn-primary" type="button" id="template" hidden="hidden">
+  Messages <span class="badge">4</span>
+</button> -->
 </div>
 
 <p id="paramId" style="visibility: hidden" th:text="${user.user.getId()}"></p>
 
+<script id="taskTemplate" type="text/x-handlebars-template">
+<button class="btn btn-primary" type="button" id="task{{id}}" data-toggle="tooltip" title="{{description}}" token="{{token}}" {{#if done}}disabled{{/if}} >
+  	{{name}} <span class="badge">{{points}}</span>
+</button>
+</script>
+
 <script>
 
     $( document ).ready(function(){
-        loadUserData($('#paramId').html());
+    	loadTasks();
     });
 </script>
 </body>

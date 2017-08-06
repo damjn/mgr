@@ -19,8 +19,8 @@
 Your browser does not support the video tag.
 </video>
 <span id="description" th:text="${first.description}"></span>
-<!-- <button onclick="nextVideo($('#traningId123').html(), $('#order_nr').html())">Next video</button> -->
-<button onclick="addVideo()">add video</button>
+<button onclick="nextVideo($('#traningId123').html(), $('#order_nr').html())">Next video</button>
+<button onclick="previousVideo($('#traningId123').html(), $('#order_nr').html())">Previous video</button>
 </div>
 </body>
 
@@ -34,10 +34,13 @@ function nextVideo(id, ordernr) {
         else{
                 $('#order_nr').empty().append(data.order_nr);
                 $('#description').empty().append(data.description);
-                $('#video').remove();
-                var video = "<video id='video' width='320' height='240' controls> <source id='src' iter='0' src='"+data.path+"' type='video/mp4'></video>";
-                $("content").append(video);
-            
+                //$('#video').remove();
+                //var video = "<video id='video' width='320' height='240' controls> <source id='src' iter='0' src='"+data.path+"' type='video/mp4'></video>";
+                //$("content").append(video);
+            	var myVideo = document.getElementsByTagName('video')[0];
+				myVideo.src = data.path;
+				myVideo.load();
+				console.log("elo")
         }
     });
 	//$('#video').attr('src', 'content\\test\\small.mp4');
@@ -49,11 +52,27 @@ function nextVideo(id, ordernr) {
 	//$('#video').attr('th:src', src);
 }
 
-function addVideo(){
-	$('#video').remove();
-	var video = "<video id='video' width='320' height='240' controls> <source id='src' iter='0' src='content\\test\\small.mp4' type='video/mp4'></video>";
-	$("body").append(video);  
+function previousVideo(id, ordernr) {
+	ordernr = Number(ordernr) -1;
+	$.get( "/content/"+id+"/"+ordernr, function (data) {
+        if (data.length == 0){
+
+        }
+        else{
+                $('#order_nr').empty().append(data.order_nr);
+                $('#description').empty().append(data.description);
+                //$('#video').remove();
+                //var video = "<video id='video' width='320' height='240' controls> <source id='src' iter='0' src='"+data.path+"' type='video/mp4'></video>";
+                //$("content").append(video);
+            	var myVideo = document.getElementsByTagName('video')[0];
+				myVideo.src = data.path;
+				myVideo.load();
+				console.log("elo")
+        }
+    });
 }
+
+
 
 </script>
 </html>

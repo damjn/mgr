@@ -37,8 +37,8 @@ public class ApplicationController {
 		ModelAndView model = new ModelAndView();
 		model.addObject("t_name", training_name);
 		model.addObject("first", first);
-		//List<ContentDTO> courseContent = contentService.getCourseContent(1);
-		//model.addObject("courses",courseContent);
+		List<ContentDTO> courseContent = contentService.getCourseContent(1);
+		model.addObject("courses",courseContent);
 		model.setViewName("video");
 		return model;
 	}
@@ -104,6 +104,24 @@ public class ApplicationController {
         MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addObject("user", user);
         model.setViewName("userData");
+        return model;
+    }
+    
+    @RequestMapping(value = "/tasks", method = RequestMethod.GET)
+    public ModelAndView tasks() {
+        ModelAndView model = new ModelAndView();
+        MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addObject("user", user);
+        model.setViewName("tasks");
+        return model;
+    }
+    
+    @RequestMapping(value = "/myCourses", method = RequestMethod.GET)
+    public ModelAndView myCourses() {
+        ModelAndView model = new ModelAndView();
+        MyUserPrincipal user = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addObject("user", user);
+        model.setViewName("myCourses");
         return model;
     }
 

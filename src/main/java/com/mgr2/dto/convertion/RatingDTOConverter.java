@@ -11,7 +11,7 @@ public class RatingDTOConverter {
 	public Rating convertEmailDTOtoModel(RateDTO rDTO){
 		Rating r = new Rating();
 		r.setRate(rDTO.getRate());
-		r.setTraining_id(rDTO.getTraining_id());
+		r.setTrainingid(rDTO.getTrainingid());
 		return r;
 	}
 	
@@ -19,8 +19,8 @@ public class RatingDTOConverter {
 		Rating r = new Rating();
 		r.setRate(rDTO.getRate());
 		r.setId(rDTO.getId());
-		r.setTraining_id(rDTO.getTraining_id());
-		r.setUser_id(rDTO.getUser_id());
+		r.setTrainingid(rDTO.getTrainingid());
+		r.setUserid(rDTO.getUserid());
 		return r;
 	}
 
